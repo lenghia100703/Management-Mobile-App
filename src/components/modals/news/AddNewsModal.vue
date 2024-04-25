@@ -2,6 +2,7 @@
 
 import { reactive, ref } from 'vue'
 import { ElForm, FormRules } from 'element-plus'
+import { createNews } from '@/services/news'
 
 const postForm = ref({
     title: '',
@@ -37,21 +38,35 @@ const rules = reactive<FormRules>({
 const createLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
 
-const handleCreateNews = (data: any) => {
-
+const handleCreateNews = async (data: any) => {
+    try {
+        createLoading.value = true
+        await createNews(data)
+        resetForm(postForm.value)
+        visible.value = false
+    } catch (e) {
+        console.log(e)
+    } finally {
+        createLoading.value = false
+    }
 }
 
 const handleChangeImage = () => {
     if (imageInput.value?.files && imageInput.value.files[0]) {
-        postForm.value.image = postForm.value.files[0]
+        postForm.value.image = imageInput.value.files[0]
+        console.log(postForm.value.image)
     }
 }
 
 const submitForm = (formEl: typeof ElForm | null) => {
     if (!formEl) return
-    formEl.validate((valid: any) => {
+    formEl.validate(async (valid: any) => {
         if (valid) {
-            handleCreateNews(postForm.value)
+            const formData = new FormData()
+            formData.append('title', postForm.value.title)
+            formData.append('body', postForm.value.body)
+            formData.append('image', postForm.value.image as File)
+            await handleCreateNews(formData)
         } else {
             return false
         }
@@ -75,13 +90,13 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Tạo tin tức - sự kiện mới' width='40%' top='8vh'>
+    <el-dialog v-model='visible' title='Tạo tin tức - sự kiện mới' width='40%' top='15vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tiêu đề:' prop='title'>
-                <el-input v-model='postForm.username' type='text' />
+                <el-input v-model='postForm.title' type='text' />
             </el-form-item>
             <el-form-item label='Nội dung:' prop='body'>
-                <el-input v-model='postForm.email' type='text' />
+                <el-input v-model='postForm.body' type='textarea' />
             </el-form-item>
             <el-form-item label='Ảnh minh họa' prop='image'>
                 <input

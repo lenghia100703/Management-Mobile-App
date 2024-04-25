@@ -5,6 +5,7 @@ export const AuthAPI = {
 }
 
 export const NewsAPI = {
+    ALL_NEWS: `/news`,
     LIST_NEWS: (page: any) =>  `/news?page=${page}`,
     EDIT_NEWS: (newsId: any) => `/news/${newsId}`,
     DELETE_NEWS: (newsId: any) => `/news/${newsId}`,

@@ -27,7 +27,7 @@ http.interceptors.response.use(
     (error: any) => {
         if ([401, 403].includes(error.response.status)) {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            logout().then((r) => {console.log(r)})
+            // logout().then((r) => {console.log(r)})
         }
         return Promise.reject(error)
     }

@@ -4,8 +4,6 @@ import { logout } from '@/services/auth.ts'
 import { PATHS } from '@/router/paths.ts'
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-
 export const useAuthenticationStore = defineStore('authentication',{
     state: () => ({
         userInfo: null,
@@ -30,12 +28,10 @@ export const useAuthenticationStore = defineStore('authentication',{
         async logout() {
             try {
                 await logout().then()
-                await router.push(PATHS.LOGIN)
                 this.userInfo = null
             } catch (e: any) {
                 if (e.response && e.response.status === 401) {
                     this.userInfo = null
-                    await router.push(PATHS.LOGIN)
                 }
             }
         }
