@@ -1,14 +1,7 @@
 <script setup lang='ts'>
 
-import AddNewsModal from '@/components/modals/news/AddNewsModal.vue'
-import { onMounted, ref } from 'vue'
-import { getAllNews } from '@/services/news'
-import EditNewsModal from '@/components/modals/news/EditNewsModal.vue'
-import DeleteNewsModal from '@/components/modals/news/DeleteNewsModal.vue'
+import { ref } from 'vue'
 
-const addNewsRef = ref<InstanceType<typeof AddNewsModal>>()
-const editNewsModal = ref<InstanceType<typeof EditNewsModal>>()
-const deleteNewsModal = ref<InstanceType<typeof DeleteNewsModal>>()
 const tableData = ref<any[]>([])
 const tableLoading = ref(false)
 const searchLoading = ref(false)
@@ -25,7 +18,7 @@ const handleSearch = async () => {
 const loadTableData = async () => {
     tableLoading.value = true
     try {
-        const res = await getAllNews()
+        const res = await getAllUsers()
         tableData.value = res
     } catch (e) {
         console.log(e)
@@ -33,19 +26,15 @@ const loadTableData = async () => {
         tableLoading.value = false
     }
 }
-
-onMounted(async () => {
-    await loadTableData()
-})
 </script>
 
 <template>
     <div class='title-page'>
-        <h1>Quản Lý Tin Tức - Sự Kiện</h1>
+        <h1>Quản lý người dùng</h1>
     </div>
     <div class='search'>
         <div class='left'>
-            <el-input class='search-input' placeholder='Tìm tin tức - sự kiện...' type='text' v-model='searchName'
+            <el-input class='search-input' placeholder='Tìm người dùng...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
                 Tìm kiếm
@@ -146,46 +135,8 @@ onMounted(async () => {
             @current-change='handleChangePage'
         />
     </div>
-
-    <AddNewsModal ref='addNewsRef' :call-back='() => loadTableData()' />
-    <EditNewsModal ref='editNewsModal' />
-    <DeleteNewsModal ref='deleteNewsModal' :call-back='() => loadTableData()' />
 </template>
 
 <style scoped>
-.title-page {
-    text-align: center;
-    margin-bottom: 28px;
-}
 
-.search {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-.left {
-    display: flex;
-    float: left;
-}
-
-.right {
-    display: flex;
-    float: right;
-}
-
-.flex-grow {
-    flex-grow: 1;
-}
-
-.search-input {
-    min-width: 180px;
-}
-
-.search-btn {
-    margin-left: 20px;
-}
-
-.pagination {
-    float: right;
-}
 </style>

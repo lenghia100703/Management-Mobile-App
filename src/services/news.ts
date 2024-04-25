@@ -9,3 +9,11 @@ export const createNews = async (payload: any) => {
 export const getAllNews = async () => {
     return (await http.get(NewsAPI.ALL_NEWS)).data
 }
+
+export const editNews = async () => {
+
+}
+
+export const deleteNews = async (payload: any) => {
+    await http.delete(NewsAPI.DELETE_NEWS(payload))
+}
