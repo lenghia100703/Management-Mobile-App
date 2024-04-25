@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { LocalStorageKeys } from '@/constants'
-import { getLocalStorage } from '@/helper/LocalStorageHelper'
+import { getLocalStorage } from '@/helpers/LocalStorageHelper'
 import { RequestHeaders } from '@/constants'
+import { logout } from '@/services/auth.ts'
 
 const http = axios.create({
     withCredentials: true,
@@ -26,7 +27,7 @@ http.interceptors.response.use(
     (error: any) => {
         if ([401, 403].includes(error.response.status)) {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            logout().then((r) => {})
+            logout().then((r) => {console.log(r)})
         }
         return Promise.reject(error)
     }

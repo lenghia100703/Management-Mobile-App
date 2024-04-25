@@ -1,8 +1,13 @@
 <script setup lang='ts'>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import NavigationDesktop from '@/layouts/NavigationDesktop.vue'
+import { useAuthenticationStore } from '@/stores/useAuthenticationStore.ts'
+import { PATHS } from '@/router/paths.ts'
+import { useRouter } from 'vue-router'
 
+const authenticationStore = useAuthenticationStore()
+
+authenticationStore.loadFromServer()
 </script>
 
 <template>
@@ -30,5 +35,7 @@ import NavigationDesktop from '@/layouts/NavigationDesktop.vue'
 </template>
 
 <style scoped>
+#footer {
 
+}
 </style>

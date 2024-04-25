@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { PATHS } from '@/router/paths.ts'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import ManageNewsView from '@/views/news/ManageNewsView.vue'
+import LoginView from '@/views/main/LoginView.vue'
+import RegisterView from '@/views/main/RegisterView.vue'
+
 
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +17,40 @@ export const router = createRouter({
                 {
                     path: PATHS.HOME,
                     component: HomeView,
+                    name: 'home',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_NEWS,
+                    component: ManageNewsView,
+                    name: 'manage-news',
+                },
+                {
+                    path: PATHS.LOGIN,
+                    component: LoginView,
+                    name: 'login',
+                    // beforeEnter: (to, from, next) => {
+                    //     const authenticationStore = useAuthenticationStore()
+                    //     const { authenticated } = storeToRefs(authenticationStore)
+                    //     if (authenticated) {
+                    //         next(PATHS.HOME);
+                    //     } else {
+                    //         next();
+                    //     }
+                    // }
+                },
+                {
+                    path: PATHS.REGISTER,
+                    component: RegisterView,
+                    name: 'register',
+                    // beforeEnter: (to, from, next) => {
+                    //     const authenticationStore = useAuthenticationStore()
+                    //     const { authenticated } = storeToRefs(authenticationStore)
+                    //     if (authenticated) {
+                    //         next(PATHS.HOME);
+                    //     } else {
+                    //         next();
+                    //     }
+                    // }
                 },
             ],
         },
