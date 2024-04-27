@@ -1,20 +1,13 @@
 <script setup lang='ts'>
 
 import { onMounted, ref } from 'vue'
-import { getAllUsers } from '@/services/user'
-import AddUserModal from '@/components/modals/users/AddUserModal.vue'
-import EditUserModal from '@/components/modals/users/EditUserModal.vue'
-import DeleteUserModal from '@/components/modals/users/DeleteUserModal.vue'
+import { getAllNews } from '@/services/news'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
 
 const tableData = ref<any[]>([])
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
-
-const addUserModal = ref<InstanceType<typeof AddUserModal>>()
-const editUserModal = ref<InstanceType<typeof EditUserModal>>()
-const deleteUserModal = ref<InstanceType<typeof DeleteUserModal>>()
 
 const handleChangePage = async () => {
     await loadTableData()
@@ -27,7 +20,7 @@ const handleSearch = async () => {
 const loadTableData = async () => {
     tableLoading.value = true
     try {
-        const res = await getAllUsers()
+        const res = await getAllNews()
         tableData.value = res
     } catch (e) {
         console.log(e)
@@ -44,11 +37,11 @@ onMounted(async () => {
 
 <template>
     <div class='title-page'>
-        <h1>Quản lý Người Dùng</h1>
+        <h1>Quản Lý Hiện Vật</h1>
     </div>
     <div class='search'>
         <div class='left'>
-            <el-input class='search-input' placeholder='Tìm người dùng...' type='text' v-model='searchName'
+            <el-input class='search-input' placeholder='Tìm hiện vật...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
                 Tìm kiếm
@@ -56,66 +49,58 @@ onMounted(async () => {
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addUserModal?.openModal()'>Thêm người dùng</el-button>
+            <el-button plain type='primary' @click='addNewsRef?.openModal()'>Thêm hiện vật</el-button>
         </div>
     </div>
     <el-table
         :data='tableData'
         v-loading='tableLoading'
         :border='true'
-        empty-text='Không có người dùng nào'
+        empty-text='Không có hiện vật nào'
         class='table'
         :default-sort="{ prop: 'id', order: 'ascending' }"
     >
         <el-table-column label='ID' prop='id' width='80' sortable :align="'center'"></el-table-column>
-        <el-table-column label='Tên người dùng' prop='username' sortable>
+        <el-table-column label='Tên hiện vật' prop='name' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.username'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.name'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.username }}</el-text>
+                        <el-text truncated> {{ row.name }}</el-text>
                     </template
                     >
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Email' prop='email'>
+        <el-table-column label='Chi tiết hiện vật' prop='description'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.email'>
-                    <template #reference
-                    >
-                        <el-text truncated> {{ row.email }}</el-text>
-                    </template
-                    >
+                <el-popover placement='bottom' :width='750' trigger='click'>
+                    <template #reference>
+                        <el-text truncated> {{ row.description }}</el-text>
+                    </template>
+                    <template #default>
+                        <el-text style='max-width: 100%;'>
+                            {{ row.description }}
+                        </el-text>
+                    </template>
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Số điện thoại' prop='phone'>
-            <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.phone'>
-                    <template #reference
-                    >
-                        <el-text truncated> {{ row.phone }}</el-text>
-                    </template
-                    >
-                </el-popover>
-            </template>
-        </el-table-column>
-        <el-table-column label='Ảnh đại diện' prop='avatar'>
+        <el-table-column label='Ảnh minh họa' prop='image'>
             <template #default='{ row }'>
                 <el-popover placement='bottom' :show-after='400' :width='300' trigger='hover'>
                     <template #reference>
                         <el-text truncated>
-                            <el-link :href='row.image' target='_blank'>{{ row.avatar }}</el-link>
+                            <el-link :href='row.image' target='_blank'>{{ row.image }}</el-link>
                         </el-text>
                     </template>
                     <template #default>
-                        <el-image style='max-width: 300px; max-height: 300px;' :src='row.avatar' alt='Image' />
+                        <el-image style='max-width: 300px; max-height: 300px;' :src='row.image' alt='Image' />
                     </template>
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Người tạo' prop='createdBy'>
+        <el-table-column label='Người tạo' :width='200' prop='createdBy'>
             <template #default='{ row }'>
                 <el-popover placement='bottom' trigger='click' :content='row.createdBy'>
                     <template #reference
@@ -126,7 +111,7 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Người sửa' prop='updatedBy'>
+        <el-table-column label='Người sửa' :width='200' prop='updatedBy'>
             <template #default='{ row }'>
                 <el-popover placement='bottom' trigger='click' :content='row.updatedBy'>
                     <template #reference
@@ -137,7 +122,7 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Ngày tạo' prop='createdAt' sortable>
+        <el-table-column label='Ngày tạo' :width='200' prop='createdAt' sortable>
             <template #default='{ row }'>
                 <el-popover placement='bottom' trigger='click' :content='row.createdAt'>
                     <template #reference
@@ -148,7 +133,7 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
+        <el-table-column label='Ngày sửa' :width='200' prop='updatedAt' sortable>
             <template #default='{ row }'>
                 <el-popover placement='bottom' trigger='click' :content='row.updatedAt'>
                     <template #reference
@@ -162,13 +147,13 @@ onMounted(async () => {
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa tài khoản' placement='bottom'>
-                    <el-button type='primary' size='small' plain @click='editUserModal?.openModal(scope.row)'
+                    <el-button type='primary' size='small' plain @click='editNewsModal?.openModal(scope.row)'
                     >Sửa
                     </el-button
                     >
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa tài khoản' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteUserModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteNewsModal?.openModal(scope.row)' plain>Xóa
                     </el-button>
                 </el-tooltip>
             </template>
@@ -183,10 +168,6 @@ onMounted(async () => {
             @current-change='handleChangePage'
         />
     </div>
-
-    <AddUserModal ref='addUserModal' :call-back='() => loadTableData()' />
-    <EditUserModal ref='editUserModal' :call-back='() => loadTableData()' />
-    <DeleteUserModal ref='deleteUserModal' :call-back='() => loadTableData()' />
 </template>
 
 <style scoped>

@@ -20,21 +20,21 @@ const props = withDefaults(
         size: 'inherit',
         clickable: true,
         disabled: false,
-    }
+    },
 )
 
 const emit = defineEmits(['click'])
 
 const cursor = computed(() =>
-    props.title && props.clickable && !props.disabled ? 'pointer' : 'unset'
+    props.title && props.clickable && !props.disabled ? 'pointer' : 'unset',
 )
 const displayColor = computed(() =>
-    props.disabled ? Colors.DISABLED : props.color + ' !important'
+    props.disabled ? COLORS.DISABLED : props.color + ' !important',
 )
 const displayTitle = computed(() =>
     props.title && props.disabled
         ? 'Bạn không có quyền thực hiện chức năng này'
-        : props.title
+        : props.title,
 )
 const fontSize = computed(() => props.size)
 
@@ -47,13 +47,13 @@ function onClick() {
 <template>
     <span
         :class="`icon ${disabled ? 'disabled' : 'enabled'}`"
-        @click="onClick"
-        :style="{ color: displayColor, cursor, ...customStyle }"
+        @click='onClick'
+        :style='{ color: displayColor, cursor, ...customStyle }'
     >
-    <el-tooltip v-if="displayTitle" placement="top" :content="displayTitle">
-      <i :class="icon" :style="{ fontSize, color: displayColor }" />
+    <el-tooltip v-if='displayTitle' placement='top' :content='displayTitle'>
+      <i :class='icon' :style='{ fontSize, color: displayColor }' />
     </el-tooltip>
-    <i v-else :class="icon" :style="{ fontSize, color: displayColor }" />
+    <i v-else :class='icon' :style='{ fontSize, color: displayColor }' />
   </span>
 </template>
 

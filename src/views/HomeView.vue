@@ -1,14 +1,13 @@
 <script setup lang='ts'>
 
-import { onMounted, ref } from 'vue'
-import { getCurrentUser } from '@/services/user.ts'
-import { useAuthenticationStore } from '@/stores/useAuthenticationStore.ts'
+import { onMounted } from 'vue'
+import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
+import { loadingFullScreen } from '@/utils/loadingFullScreen'
 
-// const user = ref(null)
 const authenticationStore = useAuthenticationStore()
 authenticationStore.loadFromServer()
-onMounted(async () => {
-
+onMounted(() => {
+    loadingFullScreen()
 })
 </script>
 

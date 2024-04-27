@@ -6,6 +6,7 @@ import { logout } from '@/services/auth'
 
 const http = axios.create({
     withCredentials: true,
+    // @ts-ignore
     baseURL: import.meta.env.VITE_APP_ROOT_API,
     transformRequest: [
         function (data: any, headers: any) {

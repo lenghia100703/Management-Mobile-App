@@ -53,9 +53,9 @@ const rules = reactive<FormRules>({
         {
             validator: (rule: any, value: any, callback: any) => {
                 if (value !== postForm.value.password) {
-                    callback('Mật khẩu xác nhận không khớp');
+                    callback('Mật khẩu xác nhận không khớp')
                 } else {
-                    callback();
+                    callback()
                 }
             },
             trigger: 'blur',
@@ -94,7 +94,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
                 username: postForm.value.username,
                 email: postForm.value.email,
                 password: postForm.value.password,
-                confirmPassword: postForm.value.confirmPassword
+                confirmPassword: postForm.value.confirmPassword,
             }
             await handleCreateUser(data)
         } else {

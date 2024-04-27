@@ -1,16 +1,16 @@
 <script setup lang='ts'>
 import MenuHeader from '@/components/MenuHeader.vue'
-import { PATHS } from '@/router/paths.ts'
-import { useAuthenticationStore } from '@/stores/useAuthenticationStore.ts'
+import { PATHS } from '@/router/paths'
+import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 import { ref } from 'vue'
 import AvatarDrawers from '@/components/drawers/AvatarDrawers.vue'
 
 const authenticationStore = useAuthenticationStore()
 authenticationStore.loadFromServer()
-const infoRef = ref<InstanceType<typeof AvatarDrawers> | null>(null);
+const infoRef = ref<InstanceType<typeof AvatarDrawers> | null>(null)
 
 const handleOpenDrawer = () => {
-    infoRef.value?.openDrawer();
+    infoRef.value?.openDrawer()
 }
 </script>
 
@@ -23,7 +23,7 @@ const handleOpenDrawer = () => {
 
                 <div class='flex-grow'></div>
                 <el-menu-item class='no-hover'>
-                    <span class='name-user' @click="handleOpenDrawer">
+                    <span class='name-user' @click='handleOpenDrawer'>
                         <el-avatar :src='authenticationStore?.userInfo?.avatar' />
                         <span class='avatar'>{{ authenticationStore?.userInfo?.username }}</span>
                     </span>

@@ -1,12 +1,12 @@
 <script setup lang='ts'>
-import { reactive, ref, onMounted, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import { ElForm, ElMessage, type FormRules } from 'element-plus'
-import { login } from '@/services/auth.ts'
+import { login } from '@/services/auth'
 import { useRouter } from 'vue-router'
-import { PATHS } from '@/router/paths.ts'
+import { PATHS } from '@/router/paths'
 import { storeToRefs } from 'pinia'
-import { useAuthenticationStore } from '@/stores/useAuthenticationStore.ts'
+import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 
 const submitLoading = ref<boolean>(false)
 const router = useRouter()

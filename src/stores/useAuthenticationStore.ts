@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia'
-import { getCurrentUser } from '@/services/user.ts'
-import { logout } from '@/services/auth.ts'
-import { PATHS } from '@/router/paths.ts'
-import { useRouter } from 'vue-router'
+import { getCurrentUser } from '@/services/user'
+import { logout } from '@/services/auth'
 
-export const useAuthenticationStore = defineStore('authentication',{
+export const useAuthenticationStore = defineStore('authentication', {
     state: () => ({
         userInfo: null,
-        role: String
+        role: String,
     }),
     getters: {
         authenticated: (state) => state.userInfo != null,
@@ -18,8 +16,7 @@ export const useAuthenticationStore = defineStore('authentication',{
                 const resUser = await getCurrentUser()
                 this.userInfo = resUser.data
                 this.role = resUser.data.role
-            }
-            catch (e: any) {
+            } catch (e: any) {
                 if (e.response && e.response.status === 401) {
                     this.userInfo = null
                 }
@@ -34,6 +31,6 @@ export const useAuthenticationStore = defineStore('authentication',{
                     this.userInfo = null
                 }
             }
-        }
-    }
+        },
+    },
 })

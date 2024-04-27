@@ -5,8 +5,9 @@ import { onMounted, ref } from 'vue'
 import { getAllNews } from '@/services/news'
 import EditNewsModal from '@/components/modals/news/EditNewsModal.vue'
 import DeleteNewsModal from '@/components/modals/news/DeleteNewsModal.vue'
+import { loadingFullScreen } from '@/utils/loadingFullScreen'
 
-const addNewsRef = ref<InstanceType<typeof AddNewsModal>>()
+const addNewsModal = ref<InstanceType<typeof AddNewsModal>>()
 const editNewsModal = ref<InstanceType<typeof EditNewsModal>>()
 const deleteNewsModal = ref<InstanceType<typeof DeleteNewsModal>>()
 const tableData = ref<any[]>([])
@@ -35,6 +36,7 @@ const loadTableData = async () => {
 }
 
 onMounted(async () => {
+    loadingFullScreen()
     await loadTableData()
 })
 </script>
@@ -53,7 +55,7 @@ onMounted(async () => {
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addNewsRef?.openModal()'>Thêm tin tức</el-button>
+            <el-button plain type='primary' @click='addNewsModal?.openModal()'>Thêm tin tức</el-button>
         </div>
     </div>
     <el-table
@@ -78,32 +80,35 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Nội dung' prop='body'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.body'>
-                    <template #reference
-                    >
+                <el-popover placement='bottom' :width='750' trigger='click'>
+                    <template #reference>
                         <el-text truncated> {{ row.body }}</el-text>
-                    </template
-                    >
+                    </template>
+                    <template #default>
+                        <el-text style='max-width: 100%;'>
+                            {{ row.body }}
+                        </el-text>
+                    </template>
                 </el-popover>
             </template>
         </el-table-column>
         <el-table-column label='Ảnh minh họa' prop='image'>
             <template #default='{ row }'>
-                <el-popover placement='bottom'  trigger='hover'>
+                <el-popover placement='bottom' :show-after='400' :width='300' trigger='hover'>
                     <template #reference>
                         <el-text truncated>
                             <el-link :href='row.image' target='_blank'>{{ row.image }}</el-link>
                         </el-text>
                     </template>
                     <template #default>
-                        <el-image style='max-width: 200px; max-height: 200px;' :src='row.image' alt='Image' />
+                        <el-image style='max-width: 300px; max-height: 300px;' :src='row.image' alt='Image' />
                     </template>
                 </el-popover>
             </template>
         </el-table-column>
         <el-table-column label='Người tạo' prop='createdBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom'  trigger='click' :content='row.createdBy'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.createdBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.createdBy }}</el-text>
@@ -114,7 +119,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Người sửa' prop='updatedBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom'  trigger='click' :content='row.updatedBy'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.updatedBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.updatedBy }}</el-text>
@@ -125,7 +130,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày tạo' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom'  trigger='click' :content='row.createdAt'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.createdAt'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.createdAt }}</el-text>
@@ -136,7 +141,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom'  trigger='click' :content='row.updatedAt'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.updatedAt'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.updatedAt }}</el-text>
@@ -170,7 +175,7 @@ onMounted(async () => {
         />
     </div>
 
-    <AddNewsModal ref='addNewsRef' :call-back='() => loadTableData()' />
+    <AddNewsModal ref='addNewsModal' :call-back='() => loadTableData()' />
     <EditNewsModal ref='editNewsModal' :call-back='() => loadTableData()' />
     <DeleteNewsModal ref='deleteNewsModal' :call-back='() => loadTableData()' />
 </template>

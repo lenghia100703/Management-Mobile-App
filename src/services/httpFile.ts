@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const httpFile = axios.create({
     withCredentials: true,
+    // @ts-ignore
     baseURL: import.meta.env.VITE_APP_ROOT_API,
     headers: {
         'Content-Type': 'multipart/form-data',
@@ -18,7 +19,7 @@ httpFile.interceptors.response.use(
             // logout().then((r) => {console.log(r)})
         }
         return Promise.reject(error)
-    }
+    },
 )
 
 export default httpFile

@@ -31,7 +31,7 @@ const rules = reactive<FormRules>({
             message: 'Vui lòng nhập nội dung',
             trigger: 'blur',
         },
-    ]
+    ],
 })
 const editLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
@@ -46,11 +46,11 @@ const handleEditNews = async (data: any) => {
     editLoading.value = true
     try {
         await editNews(newsId.value, data)
-        await props.callBack();
+        await props.callBack()
         ElMessage({
             message: 'Sửa thành công',
             type: 'success',
-        });
+        })
         resetForm(editForm.value)
         visible.value = false
     } catch (e) {
@@ -58,7 +58,7 @@ const handleEditNews = async (data: any) => {
         ElMessage({
             message: 'Sửa thất bại',
             type: 'error',
-        });
+        })
     } finally {
         editLoading.value = false
     }

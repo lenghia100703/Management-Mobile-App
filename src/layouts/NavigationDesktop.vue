@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 
-import { PATHS } from '@/router/paths.ts'
+import { PATHS } from '@/router/paths'
 import FAIcon from '@/components/common/FAIcon.vue'
 </script>
 

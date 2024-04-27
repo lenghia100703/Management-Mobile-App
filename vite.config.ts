@@ -9,11 +9,12 @@ export default defineConfig({
         template: {
             compilerOptions: {
                 isCustomElement: (tag) => ['md-linedivider'].includes(tag),
-            }
-        }
+            },
+        },
     })],
     resolve: {
         alias: {
+            // @ts-ignore
             '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
     },

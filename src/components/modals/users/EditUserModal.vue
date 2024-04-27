@@ -15,7 +15,7 @@ const editForm = ref({
     username: '',
     email: '',
     phone: '',
-    avatar: null
+    avatar: null,
 })
 
 const rules = reactive<FormRules>({
@@ -52,11 +52,11 @@ const handleEditUser = async (data: any) => {
     editLoading.value = true
     try {
         await editUser(userId.value, data)
-        await props.callBack();
+        await props.callBack()
         ElMessage({
             message: 'Sửa thành công',
             type: 'success',
-        });
+        })
         resetForm(editForm.value)
         visible.value = false
     } catch (e) {
@@ -64,7 +64,7 @@ const handleEditUser = async (data: any) => {
         ElMessage({
             message: 'Sửa thất bại',
             type: 'error',
-        });
+        })
     } finally {
         editLoading.value = false
     }
@@ -101,7 +101,7 @@ const openModal = (data: any) => {
 }
 
 defineExpose({
-    openModal
+    openModal,
 })
 </script>
 

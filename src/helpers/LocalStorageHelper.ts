@@ -4,7 +4,7 @@ export const putLocalStorageObject = (key: string, data: any) => {
 
 export const getLocalStorageObject = (
     key: string,
-    defaultValue: any = null
+    defaultValue: any = null,
 ) => {
     const value = localStorage.getItem(key)
     return value != null ? JSON.parse(value) : defaultValue

@@ -6,9 +6,11 @@ import ManageNewsView from '@/views/news/ManageNewsView.vue'
 import LoginView from '@/views/main/LoginView.vue'
 import RegisterView from '@/views/main/RegisterView.vue'
 import ManageUsersView from '@/views/users/ManageUsersView.vue'
+import ManageExhibitionsView from '@/views/exhibitions/ManageExhibitionsView.vue'
 
 
 export const router = createRouter({
+    // @ts-ignore
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
@@ -56,8 +58,13 @@ export const router = createRouter({
                 {
                     path: PATHS.ADMIN_MANAGE_USER,
                     component: ManageUsersView,
-                    name: 'manage-user',
-                }
+                    name: 'manage-users',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_EXHIBITION,
+                    component: ManageExhibitionsView,
+                    name: 'manage-exhibitions',
+                },
             ],
         },
     ],
