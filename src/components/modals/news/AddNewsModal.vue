@@ -43,8 +43,8 @@ const createLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
 
 const handleCreateNews = async (data: any) => {
+    createLoading.value = true
     try {
-        createLoading.value = true
         await createNews(data)
         await props.callBack()
         ElMessage({

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { LocalStorageKeys } from '@/constants'
 import { getLocalStorage } from '@/helpers/LocalStorageHelper'
 import { RequestHeaders } from '@/constants'
-import { logout } from '@/services/auth.ts'
+import { logout } from '@/services/auth'
 
 const http = axios.create({
     withCredentials: true,

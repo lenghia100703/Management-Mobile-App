@@ -1,51 +1,57 @@
 <script setup lang='ts'>
 
-import { reactive, ref } from 'vue'
 import { ElForm, ElMessage, FormRules } from 'element-plus'
-import { editNews } from '@/services/news'
+import { reactive, ref } from 'vue'
+import { editUser } from '@/services/user'
 
 const props = defineProps<{
     callBack: () => Promise<void>;
 }>()
 
 const visible = ref<boolean>(false)
-const newsId = ref()
+const userId = ref()
 const editFormRef = ref<typeof ElForm | null>(null)
 const editForm = ref({
-    title: '',
-    body: '',
-    image: null,
+    username: '',
+    email: '',
+    phone: '',
+    avatar: null
 })
 
 const rules = reactive<FormRules>({
-    title: [
+    username: [
         {
             required: true,
-            message: 'Vui lòng nhập tiêu đề',
+            message: 'Vui lòng nhập tên người dùng',
             trigger: 'blur',
         },
     ],
-    body: [
+    email: [
         {
             required: true,
-            message: 'Vui lòng nhập nội dung',
+            message: 'Vui lòng nhập email',
             trigger: 'blur',
         },
-    ]
+        {
+            type: 'email',
+            message: 'Vui lòng nhập đúng email',
+            trigger: ['blur', 'change'],
+        },
+    ],
 })
 const editLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
 
 const handleChangeImage = () => {
     if (imageInput.value?.files && imageInput.value.files[0]) {
-        editForm.value.image = imageInput.value.files[0]
+        editForm.value.avatar = imageInput.value.files[0]
     }
 }
 
-const handleEditNews = async (data: any) => {
+const handleEditUser = async (data: any) => {
     editLoading.value = true
     try {
-        await editNews(newsId.value, data)
+        await editUser(userId.value, data)
         await props.callBack();
         ElMessage({
             message: 'Sửa thành công',
@@ -69,10 +75,11 @@ const submitForm = (formEl: typeof ElForm | null) => {
     formEl.validate(async (valid: any) => {
         if (valid) {
             const formData = new FormData()
-            formData.append('title', editForm.value.title)
-            formData.append('body', editForm.value.body)
-            formData.append('image', editForm.value.image)
-            await handleEditNews(formData)
+            formData.append('username', editForm.value.username)
+            formData.append('email', editForm.value.email)
+            formData.append('phone', editForm.value.phone)
+            formData.append('avatar', editForm.value.avatar)
+            await handleEditUser(formData)
         } else {
             return false
         }
@@ -87,26 +94,30 @@ const resetForm = (form: any) => {
 
 const openModal = (data: any) => {
     visible.value = true
-    newsId.value = data.id
-    editForm.value.title = data.title
-    editForm.value.body = data.body
+    userId.value = data.id
+    editForm.value.username = data.username
+    editForm.value.email = data.email
+    editForm.value.phone = data.phone
 }
 
 defineExpose({
-    openModal,
+    openModal
 })
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Sửa tin tức - sự kiện' width='40%' top='15vh'>
+    <el-dialog v-model='visible' title='Sửa thông tin người dùng' width='40%' top='15vh'>
         <el-form :model='editForm' label-position='top' ref='editFormRef' :rules='rules'>
-            <el-form-item label='Tiêu đề:' prop='title'>
-                <el-input v-model='editForm.title' type='text' />
+            <el-form-item label='Email:' prop='email'>
+                <el-input v-model='editForm.email' type='text' disabled />
             </el-form-item>
-            <el-form-item label='Nội dung:' prop='body'>
-                <el-input v-model='editForm.body' type='textarea' />
+            <el-form-item label='Tên người dùng:' prop='username'>
+                <el-input v-model='editForm.username' type='text' />
             </el-form-item>
-            <el-form-item label='Ảnh minh họa' prop='image'>
+            <el-form-item label='Số điện thoại:' prop='phone'>
+                <el-input v-model='editForm.phone' type='text' />
+            </el-form-item>
+            <el-form-item label='Ảnh đại diện' prop='avatar'>
                 <input
                     type='file'
                     class='avatar-input'

@@ -1,5 +1,5 @@
-import http from '@/services/http.ts'
-import { AuthAPI } from '@/constants/API.ts'
+import http from '@/services/http'
+import { AuthAPI } from '@/constants/API'
 
 export const login = async (payload: any) => {
     return await http.post(AuthAPI.LOGIN, payload)

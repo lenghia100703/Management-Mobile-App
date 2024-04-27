@@ -10,8 +10,8 @@ export const getAllNews = async () => {
     return (await http.get(NewsAPI.ALL_NEWS)).data
 }
 
-export const editNews = async () => {
-
+export const editNews = async (newsId: any, payload: any) => {
+    await httpFile.put(NewsAPI.EDIT_NEWS(newsId), payload)
 }
 
 export const deleteNews = async (payload: any) => {

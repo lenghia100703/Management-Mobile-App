@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import { PATHS } from '@/router/paths.ts'
+import { PATHS } from '@/router/paths'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ManageNewsView from '@/views/news/ManageNewsView.vue'
 import LoginView from '@/views/main/LoginView.vue'
 import RegisterView from '@/views/main/RegisterView.vue'
+import ManageUsersView from '@/views/users/ManageUsersView.vue'
 
 
 export const router = createRouter({
@@ -52,6 +53,11 @@ export const router = createRouter({
                     //     }
                     // }
                 },
+                {
+                    path: PATHS.ADMIN_MANAGE_USER,
+                    component: ManageUsersView,
+                    name: 'manage-user',
+                }
             ],
         },
     ],
