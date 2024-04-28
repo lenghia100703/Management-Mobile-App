@@ -125,21 +125,24 @@ defineExpose({
     <el-dialog v-model='visible' title='Tạo người dùng mới' width='40%' top='15vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tên người dùng:' prop='username'>
-                <el-input v-model='postForm.username' type='text' />
+                <el-input v-model='postForm.username' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Email:' prop='email'>
-                <el-input v-model='postForm.email' type='text' />
+                <el-input v-model='postForm.email' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Mật khẩu:' prop='password'>
-                <el-input v-model='postForm.password' type='password' :show-password='true' />
+                <el-input v-model='postForm.password' type='password' :show-password='true' clearable />
             </el-form-item>
             <el-form-item label='Nhập lại mật khẩu:' prop='confirmPassword'>
-                <el-input v-model='postForm.confirmPassword' type='password' :show-password='true' />
+                <el-input v-model='postForm.confirmPassword' type='password' :show-password='true' clearable />
             </el-form-item>
 
         </el-form>
         <template #footer>
-            <span class='dialog-footer'>
+            <span class='left-dialog-footer'>
+                <el-button @click='resetForm(postForm)'>Thiết lập lại</el-button>
+            </span>
+            <span class='right-dialog-footer'>
                 <el-button @click='visible = false'>Huỷ bỏ</el-button>
                 <el-button type='primary' :loading='createLoading' @click='submitForm(postFormRef)'>
                     Tạo mới
@@ -150,5 +153,7 @@ defineExpose({
 </template>
 
 <style scoped>
-
+.left-dialog-footer {
+    float: left;
+}
 </style>

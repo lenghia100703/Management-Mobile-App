@@ -23,3 +23,12 @@ export const UserAPI = {
     USER_BY_ID: (userId: any) => `/user/${userId}`,
     CHANGE_PASSWORD: (userId: any) => `/user/change-password/${userId}`,
 }
+
+export const ExhibitionAPI = {
+    ALL_EXHIBITIONS: '/exhibition',
+    LIST_EXHIBITIONS: (page: any) => `/exhibition?page=${page}`,
+    EDIT_EXHIBITION: (exhibitionId: any) => `/exhibition/${exhibitionId}`,
+    DELETE_EXHIBITION: (exhibitionId: any) => `/exhibition/${exhibitionId}`,
+    CREATE_EXHIBITION: '/exhibition',
+    EXHIBITION_BY_ID: (exhibitionId: any) => `/exhibition/${exhibitionId}`,
+}

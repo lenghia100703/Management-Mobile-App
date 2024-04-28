@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const visible = ref<boolean>(false)
 const userId = ref()
+const defaultData = ref<any>()
 const editFormRef = ref<typeof ElForm | null>(null)
 const editForm = ref({
     username: '',
@@ -92,12 +93,20 @@ const resetForm = (form: any) => {
     form.image = null
 }
 
+const resetToDefault = (form: any) => {
+    form.avatar = null
+    form.username = defaultData.value.username
+    form.phone = defaultData.value.phone
+    form.email = defaultData.value.email
+}
+
 const openModal = (data: any) => {
     visible.value = true
     userId.value = data.id
     editForm.value.username = data.username
     editForm.value.email = data.email
     editForm.value.phone = data.phone
+    defaultData.value = data
 }
 
 defineExpose({
@@ -109,13 +118,13 @@ defineExpose({
     <el-dialog v-model='visible' title='Sửa thông tin người dùng' width='40%' top='15vh'>
         <el-form :model='editForm' label-position='top' ref='editFormRef' :rules='rules'>
             <el-form-item label='Email:' prop='email'>
-                <el-input v-model='editForm.email' type='text' disabled />
+                <el-input v-model='editForm.email' type='text' spellcheck='false' disabled />
             </el-form-item>
             <el-form-item label='Tên người dùng:' prop='username'>
-                <el-input v-model='editForm.username' type='text' />
+                <el-input v-model='editForm.username' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Số điện thoại:' prop='phone'>
-                <el-input v-model='editForm.phone' type='text' />
+                <el-input v-model='editForm.phone' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Ảnh đại diện' prop='avatar'>
                 <input
@@ -127,7 +136,10 @@ defineExpose({
             </el-form-item>
         </el-form>
         <template #footer>
-            <span class='dialog-footer'>
+            <span class='left-dialog-footer'>
+                <el-button @click='resetToDefault(editForm)'>Thiết lập lại</el-button>
+            </span>
+            <span class='right-dialog-footer'>
                 <el-button @click='visible = false'>Huỷ bỏ</el-button>
                 <el-button type='primary' :loading='editLoading' @click='submitForm(editFormRef)'>
                     Sửa
@@ -138,5 +150,7 @@ defineExpose({
 </template>
 
 <style scoped>
-
+.left-dialog-footer {
+    float: left;
+}
 </style>

@@ -1,51 +1,75 @@
 <script setup lang='ts'>
 
-import { reactive, ref } from 'vue'
 import { ElForm, ElMessage, FormRules } from 'element-plus'
-import { createNews } from '@/services/news'
+import { reactive, ref } from 'vue'
+import { createExhibition } from '@/services/exhibition'
 
 const props = defineProps<{
     callBack: () => Promise<void>;
 }>()
 
 const postForm = ref({
-    title: '',
-    body: '',
+    name: '',
+    description: '',
+    imageUrl: '',
     image: null,
 })
 
 const postFormRef = ref<typeof ElForm | null>(null)
 const visible = ref<boolean>(false)
+const imageUrlDisable = ref(false)
+const imageInput = ref<HTMLInputElement | null>(null)
+const createLoading = ref<boolean>(false)
+
+const validateImageUrlOrImageFile = (rule: any, value: any, callback: any) => {
+    if (!postForm.value.imageUrl && !postForm.value.image) {
+        callback(new Error('Vui lòng nhập đường dẫn ảnh hoặc chọn ảnh'))
+    } else {
+        callback()
+    }
+}
+
 const rules = reactive<FormRules>({
-    title: [
+    name: [
         {
             required: true,
-            message: 'Vui lòng nhập tiêu đề',
+            message: 'Vui lòng nhập tên hiện vật',
             trigger: 'blur',
         },
     ],
-    body: [
+    description: [
         {
             required: true,
-            message: 'Vui lòng nhập nội dung',
+            message: 'Vui lòng nhập chi tiết hiện vật',
             trigger: 'blur',
+        },
+    ],
+    imageUrl: [
+        {
+            trigger: ['blur', 'change'],
+            validator: validateImageUrlOrImageFile,
         },
     ],
     image: [
         {
-            required: true,
-            message: 'Vui lòng chọn ảnh minh họa',
             trigger: ['blur', 'change'],
+            validator: validateImageUrlOrImageFile,
         },
     ],
 })
-const createLoading = ref<boolean>(false)
-const imageInput = ref<HTMLInputElement | null>(null)
 
-const handleCreateNews = async (data: any) => {
+
+const handleChangeImage = () => {
+    if (imageInput.value?.files && imageInput.value.files[0]) {
+        postForm.value.image = imageInput.value.files[0]
+        imageUrlDisable.value = true
+    }
+}
+
+const handleCreateExhibition = async (data: any) => {
     createLoading.value = true
     try {
-        await createNews(data)
+        await createExhibition(data)
         await props.callBack()
         ElMessage({
             message: 'Thêm thành công',
@@ -64,22 +88,15 @@ const handleCreateNews = async (data: any) => {
     }
 }
 
-const handleChangeImage = () => {
-    if (imageInput.value?.files && imageInput.value.files[0]) {
-        postForm.value.image = imageInput.value.files[0]
-        console.log(postForm.value.image)
-    }
-}
-
 const submitForm = (formEl: typeof ElForm | null) => {
     if (!formEl) return
     formEl.validate(async (valid: any) => {
         if (valid) {
             const formData = new FormData()
-            formData.append('title', postForm.value.title)
-            formData.append('body', postForm.value.body)
+            formData.append('name', postForm.value.name)
+            formData.append('description', postForm.value.description)
             formData.append('image', postForm.value.image as File)
-            await handleCreateNews(formData)
+            await handleCreateExhibition(formData)
         } else {
             return false
         }
@@ -87,9 +104,10 @@ const submitForm = (formEl: typeof ElForm | null) => {
 }
 
 const resetForm = (form: any) => {
-    form.title = ''
-    form.body = ''
+    form.name = ''
+    form.description = ''
     form.image = null
+    form.imageUrl = ''
 }
 
 function openModal() {
@@ -103,21 +121,28 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Tạo tin tức - sự kiện mới' width='40%' top='15vh'>
+    <el-dialog v-model='visible' title='Tạo hiện vật mới' width='40%' top='15vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
-            <el-form-item label='Tiêu đề:' prop='title'>
-                <el-input v-model='postForm.title' type='text' spellcheck='false' clearable />
+            <el-form-item label='Tên hiện vật:' prop='name'>
+                <el-input v-model='postForm.name' type='text' spellcheck='false' clearable />
             </el-form-item>
-            <el-form-item label='Nội dung:' prop='body'>
-                <el-input v-model='postForm.body' type='textarea' spellcheck='false' />
+            <el-form-item label='Chi tiết hiện vật:' prop='description'>
+                <el-input v-model='postForm.description' spellcheck='false' type='textarea' />
             </el-form-item>
-            <el-form-item label='Ảnh minh họa' prop='image'>
+
+            <el-form-item label='Ảnh minh họa' prop='imageUrl'>
+                <el-input v-model='postForm.imageUrl' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />
+            </el-form-item>
+            <div class='or'>hoặc</div>
+            <el-form-item prop='image'>
                 <input
                     type='file'
                     class='avatar-input'
                     ref='imageInput'
+                    :disabled="postForm.imageUrl !== ''"
                     @change='handleChangeImage'
                 />
+
             </el-form-item>
         </el-form>
         <template #footer>
@@ -135,7 +160,13 @@ defineExpose({
 </template>
 
 <style scoped>
+.or {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
 .left-dialog-footer {
     float: left;
 }
+
 </style>

@@ -6,6 +6,7 @@ import { getAllNews } from '@/services/news'
 import EditNewsModal from '@/components/modals/news/EditNewsModal.vue'
 import DeleteNewsModal from '@/components/modals/news/DeleteNewsModal.vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
+import { convertDateTime } from '@/helpers/convertDateTime'
 
 const addNewsModal = ref<InstanceType<typeof AddNewsModal>>()
 const editNewsModal = ref<InstanceType<typeof EditNewsModal>>()
@@ -130,10 +131,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày tạo' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.createdAt'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='convertDateTime(row.createdAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.createdAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.createdAt) }}</el-text>
                     </template
                     >
                 </el-popover>
@@ -141,10 +142,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.updatedAt'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='convertDateTime(row.updatedAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.updatedAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.updatedAt) }}</el-text>
                     </template
                     >
                 </el-popover>

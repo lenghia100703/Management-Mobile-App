@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const visible = ref<boolean>(false)
 const newsId = ref()
+const defaultData = ref<any>()
 const editFormRef = ref<typeof ElForm | null>(null)
 const editForm = ref({
     title: '',
@@ -85,11 +86,18 @@ const resetForm = (form: any) => {
     form.image = null
 }
 
+const resetToDefault = (form: any) => {
+    form.image = null
+    form.title = defaultData.value.title
+    form.body = defaultData.value.body
+}
+
 const openModal = (data: any) => {
     visible.value = true
     newsId.value = data.id
     editForm.value.title = data.title
     editForm.value.body = data.body
+    defaultData.value = data
 }
 
 defineExpose({
@@ -101,10 +109,10 @@ defineExpose({
     <el-dialog v-model='visible' title='Sửa tin tức - sự kiện' width='40%' top='15vh'>
         <el-form :model='editForm' label-position='top' ref='editFormRef' :rules='rules'>
             <el-form-item label='Tiêu đề:' prop='title'>
-                <el-input v-model='editForm.title' type='text' />
+                <el-input v-model='editForm.title' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Nội dung:' prop='body'>
-                <el-input v-model='editForm.body' type='textarea' />
+                <el-input v-model='editForm.body' type='textarea' spellcheck='false' />
             </el-form-item>
             <el-form-item label='Ảnh minh họa' prop='image'>
                 <input
@@ -116,7 +124,10 @@ defineExpose({
             </el-form-item>
         </el-form>
         <template #footer>
-            <span class='dialog-footer'>
+            <span class='left-dialog-footer'>
+                <el-button @click='resetToDefault(editForm)'>Thiết lập lại</el-button>
+            </span>
+            <span class='right-dialog-footer'>
                 <el-button @click='visible = false'>Huỷ bỏ</el-button>
                 <el-button type='primary' :loading='editLoading' @click='submitForm(editFormRef)'>
                     Sửa
@@ -127,5 +138,7 @@ defineExpose({
 </template>
 
 <style scoped>
-
+.left-dialog-footer {
+    float: left;
+}
 </style>

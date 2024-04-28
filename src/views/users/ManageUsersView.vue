@@ -6,6 +6,7 @@ import AddUserModal from '@/components/modals/users/AddUserModal.vue'
 import EditUserModal from '@/components/modals/users/EditUserModal.vue'
 import DeleteUserModal from '@/components/modals/users/DeleteUserModal.vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
+import { convertDateTime } from '@/helpers/convertDateTime'
 
 const tableData = ref<any[]>([])
 const tableLoading = ref(false)
@@ -139,10 +140,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày tạo' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.createdAt'>
+                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.createdAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.createdAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.createdAt) }}</el-text>
                     </template
                     >
                 </el-popover>
@@ -150,10 +151,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.updatedAt'>
+                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.updatedAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.updatedAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.updatedAt) }}</el-text>
                     </template
                     >
                 </el-popover>

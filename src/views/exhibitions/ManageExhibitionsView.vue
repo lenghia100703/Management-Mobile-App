@@ -3,11 +3,15 @@
 import { onMounted, ref } from 'vue'
 import { getAllNews } from '@/services/news'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
+import { convertDateTime } from '../../helpers/convertDateTime'
+import AddExhibitionModal from '@/components/modals/exhibitions/AddExhibitionModal.vue'
 
 const tableData = ref<any[]>([])
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
+
+const addExhibitionModal = ref<InstanceType<typeof AddExhibitionModal>>()
 
 const handleChangePage = async () => {
     await loadTableData()
@@ -49,7 +53,7 @@ onMounted(async () => {
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addNewsRef?.openModal()'>Thêm hiện vật</el-button>
+            <el-button plain type='primary' @click='addExhibitionModal?.openModal()'>Thêm hiện vật</el-button>
         </div>
     </div>
     <el-table
@@ -124,10 +128,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày tạo' :width='200' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.createdAt'>
+                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.createdAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.createdAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.createdAt) }}</el-text>
                     </template
                     >
                 </el-popover>
@@ -135,10 +139,10 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày sửa' :width='200' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.updatedAt'>
+                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.updatedAt)'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.updatedAt }}</el-text>
+                        <el-text truncated> {{ convertDateTime(row.updatedAt) }}</el-text>
                     </template
                     >
                 </el-popover>
@@ -168,6 +172,8 @@ onMounted(async () => {
             @current-change='handleChangePage'
         />
     </div>
+
+    <AddExhibitionModal ref='addExhibitionModal' :call-back='() => loadTableData()' />
 </template>
 
 <style scoped>
