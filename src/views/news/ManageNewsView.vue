@@ -12,23 +12,25 @@ const addNewsModal = ref<InstanceType<typeof AddNewsModal>>()
 const editNewsModal = ref<InstanceType<typeof EditNewsModal>>()
 const deleteNewsModal = ref<InstanceType<typeof DeleteNewsModal>>()
 const tableData = ref<any[]>([])
+const totalData = ref<any>(0)
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
 
-const handleChangePage = async () => {
-    await loadTableData()
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {
-    await loadTableData()
+    await loadTableData(1)
 }
 
-const loadTableData = async () => {
+const loadTableData = async (page: any) => {
     tableLoading.value = true
     try {
-        const res = await getAllNews()
-        tableData.value = res
+        const res = await getAllNews(page)
+        tableData.value = res.data
+        totalData.value = res.totalData
     } catch (e) {
         console.log(e)
     } finally {
@@ -38,7 +40,7 @@ const loadTableData = async () => {
 
 onMounted(async () => {
     loadingFullScreen()
-    await loadTableData()
+    await loadTableData(1)
 })
 </script>
 
@@ -168,17 +170,16 @@ onMounted(async () => {
     </el-table>
     <div class='pagination'>
         <el-pagination
-            :page-size='5'
-            :pager-count='5'
+            :page-size='8'
             layout='prev, pager, next'
-            :total='tableData.length'
+            :total='totalData'
             @current-change='handleChangePage'
         />
     </div>
 
-    <AddNewsModal ref='addNewsModal' :call-back='() => loadTableData()' />
-    <EditNewsModal ref='editNewsModal' :call-back='() => loadTableData()' />
-    <DeleteNewsModal ref='deleteNewsModal' :call-back='() => loadTableData()' />
+    <AddNewsModal ref='addNewsModal' :call-back='() => loadTableData(1)' />
+    <EditNewsModal ref='editNewsModal' :call-back='() => loadTableData(1)' />
+    <DeleteNewsModal ref='deleteNewsModal' :call-back='() => loadTableData(1)' />
 </template>
 
 <style scoped>

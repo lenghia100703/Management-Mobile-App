@@ -6,8 +6,8 @@ export const getCurrentUser = async () => {
     return (await http.get(UserAPI.GET_CURRENT_USER)).data
 }
 
-export const getAllUsers = async () => {
-    return (await http.get(UserAPI.ALL_USERS)).data
+export const getAllUsers = async (page: any) => {
+    return (await http.get(UserAPI.LIST_USERS(page))).data
 }
 
 export const createUser = async (payload: any) => {

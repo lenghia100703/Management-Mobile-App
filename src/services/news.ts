@@ -6,8 +6,8 @@ export const createNews = async (payload: any) => {
     return (await httpFile.post(NewsAPI.CREATE_NEWS, payload)).data
 }
 
-export const getAllNews = async () => {
-    return (await http.get(NewsAPI.ALL_NEWS)).data
+export const getAllNews = async (page: any) => {
+    return (await http.get(NewsAPI.LIST_NEWS(page))).data
 }
 
 export const editNews = async (newsId: any, payload: any) => {

@@ -9,6 +9,7 @@ import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import { convertDateTime } from '@/helpers/convertDateTime'
 
 const tableData = ref<any[]>([])
+const totalData = ref<any>(0)
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
@@ -17,19 +18,20 @@ const addUserModal = ref<InstanceType<typeof AddUserModal>>()
 const editUserModal = ref<InstanceType<typeof EditUserModal>>()
 const deleteUserModal = ref<InstanceType<typeof DeleteUserModal>>()
 
-const handleChangePage = async () => {
-    await loadTableData()
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {
-    await loadTableData()
+    await loadTableData(1)
 }
 
-const loadTableData = async () => {
+const loadTableData = async (page: any) => {
     tableLoading.value = true
     try {
-        const res = await getAllUsers()
-        tableData.value = res
+        const res = await getAllUsers(page)
+        tableData.value = res.data
+        totalData.value = res.totalData
     } catch (e) {
         console.log(e)
     } finally {
@@ -39,7 +41,7 @@ const loadTableData = async () => {
 
 onMounted(async () => {
     loadingFullScreen()
-    await loadTableData()
+    await loadTableData(1)
 })
 </script>
 
@@ -173,17 +175,16 @@ onMounted(async () => {
     </el-table>
     <div class='pagination'>
         <el-pagination
-            :page-size='5'
-            :pager-count='5'
+            :page-size='8'
             layout='prev, pager, next'
-            :total='tableData.length'
+            :total='totalData'
             @current-change='handleChangePage'
         />
     </div>
 
-    <AddUserModal ref='addUserModal' :call-back='() => loadTableData()' />
-    <EditUserModal ref='editUserModal' :call-back='() => loadTableData()' />
-    <DeleteUserModal ref='deleteUserModal' :call-back='() => loadTableData()' />
+    <AddUserModal ref='addUserModal' :call-back='() => loadTableData(1)' />
+    <EditUserModal ref='editUserModal' :call-back='() => loadTableData(1)' />
+    <DeleteUserModal ref='deleteUserModal' :call-back='() => loadTableData(1)' />
 </template>
 
 <style scoped>

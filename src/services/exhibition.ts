@@ -4,8 +4,8 @@ import httpFile from '@/services/httpFile'
 
 
 
-export const getAllExhibition = async () => {
-    return (await http.get(ExhibitionAPI.ALL_EXHIBITIONS)).data
+export const getAllExhibition = async (page: any) => {
+    return (await http.get(ExhibitionAPI.LIST_EXHIBITIONS(page))).data
 }
 
 export const createExhibition = async (payload: any) => {

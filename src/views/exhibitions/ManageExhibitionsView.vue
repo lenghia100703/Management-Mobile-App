@@ -7,6 +7,7 @@ import { convertDateTime } from '../../helpers/convertDateTime'
 import AddExhibitionModal from '@/components/modals/exhibitions/AddExhibitionModal.vue'
 
 const tableData = ref<any[]>([])
+const totalData = ref<any>(0)
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
@@ -14,18 +15,19 @@ const searchName = ref('')
 const addExhibitionModal = ref<InstanceType<typeof AddExhibitionModal>>()
 
 const handleChangePage = async () => {
-    await loadTableData()
+    await loadTableData(1)
 }
 
 const handleSearch = async () => {
-    await loadTableData()
+    await loadTableData(1)
 }
 
-const loadTableData = async () => {
+const loadTableData = async (page: any) => {
     tableLoading.value = true
     try {
-        const res = await getAllNews()
-        tableData.value = res
+        const res = await getAllNews(page)
+        tableData.value = res.data
+        totalData.value = res.totalData
     } catch (e) {
         console.log(e)
     } finally {
@@ -35,7 +37,7 @@ const loadTableData = async () => {
 
 onMounted(async () => {
     loadingFullScreen()
-    await loadTableData()
+    await loadTableData(1)
 })
 </script>
 
@@ -165,15 +167,14 @@ onMounted(async () => {
     </el-table>
     <div class='pagination'>
         <el-pagination
-            :page-size='5'
-            :pager-count='5'
+            :page-size='8'
             layout='prev, pager, next'
-            :total='tableData.length'
+            :total='totalData'
             @current-change='handleChangePage'
         />
     </div>
 
-    <AddExhibitionModal ref='addExhibitionModal' :call-back='() => loadTableData()' />
+    <AddExhibitionModal ref='addExhibitionModal' :call-back='() => loadTableData(1)' />
 </template>
 
 <style scoped>
