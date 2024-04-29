@@ -37,13 +37,6 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
     ],
-    description: [
-        {
-            required: true,
-            message: 'Vui lòng nhập chi tiết hiện vật',
-            trigger: 'blur',
-        },
-    ],
     imageUrl: [
         {
             trigger: ['blur', 'change'],
@@ -96,6 +89,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
             formData.append('name', postForm.value.name)
             formData.append('description', postForm.value.description)
             formData.append('image', postForm.value.image as File)
+            formData.append('imageUrl', postForm.value.imageUrl)
             await handleCreateExhibition(formData)
         } else {
             return false
@@ -121,17 +115,17 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Tạo hiện vật mới' width='40%' top='15vh'>
+    <el-dialog v-model='visible' title='Tạo hiện vật mới' width='40%' top='8vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tên hiện vật:' prop='name'>
-                <el-input v-model='postForm.name' type='text' spellcheck='false' clearable />
+                <el-input v-model='postForm.name' placeholder='Nhập tên hiện vật' type='text' spellcheck='false' clearable />
             </el-form-item>
-            <el-form-item label='Chi tiết hiện vật:' prop='description'>
-                <el-input v-model='postForm.description' spellcheck='false' type='textarea' />
+            <el-form-item label='Chi tiết hiện vật:'>
+                <el-input v-model='postForm.description' placeholder='Nhập chi tiết hiện vật' spellcheck='false' type='textarea' />
             </el-form-item>
 
             <el-form-item label='Ảnh minh họa:' prop='imageUrl'>
-                <el-input v-model='postForm.imageUrl' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />
+                <el-input v-model='postForm.imageUrl' placeholder='Nhập đường dẫn ảnh' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />
             </el-form-item>
             <div class='or'>Hoặc chọn ảnh từ thiết bị:</div>
             <el-form-item prop='image'>
@@ -141,6 +135,7 @@ defineExpose({
                     ref='imageInput'
                     :disabled="postForm.imageUrl !== ''"
                     @change='handleChangeImage'
+                    title='Chọn ảnh từ thiết bị của bạn'
                 />
                 <label class="btn-up" for="upload-file">+</label>
             </el-form-item>

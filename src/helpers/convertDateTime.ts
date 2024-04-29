@@ -4,14 +4,46 @@ export const convertDateTime = (str: any) => {
         return ""
     } else {
         const dateObject = new Date(str);
+        let dayString = ""
+        let monthString = ""
+        let hourString = ""
+        let minuteString = ""
+        let secondString = ""
 
         const year = dateObject.getFullYear();
         const month = dateObject.getMonth() + 1;
-        const day = dateObject.getDate();
-        const hours = dateObject.getHours();
-        const minutes = dateObject.getMinutes();
-        const seconds = dateObject.getSeconds();
+        if (1 <= month && month <= 9) {
+            monthString = `0${month}`
+        } else {
+            monthString = `${month}`
+        }
 
-        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        const day = dateObject.getDate();
+        if (1 <= day && day <= 9) {
+            dayString = `0${day}`
+        } else {
+            dayString = `${day}`
+        }
+        const hours = dateObject.getHours();
+
+        if (0 <= hours && hours <= 9) {
+            hourString = `0${hours}`
+        } else {
+            hourString = `${hours}`
+        }
+        const minutes = dateObject.getMinutes();
+        if (0 <= minutes && minutes <= 9) {
+            minuteString = `0${minutes}`
+        } else {
+            minuteString = `${minutes}`
+        }
+        const seconds = dateObject.getSeconds();
+        if (0 <= seconds && seconds <= 9) {
+            secondString = `0${seconds}`
+        } else {
+            secondString = `${seconds}`
+        }
+
+        return `${dayString}/${monthString}/${year} - ${hourString}:${minuteString}:${secondString}`;
     }
 };

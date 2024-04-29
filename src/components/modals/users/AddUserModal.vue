@@ -122,19 +122,22 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Tạo người dùng mới' width='40%' top='15vh'>
+    <el-dialog v-model='visible' title='Tạo người dùng mới' width='40%' top='8vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tên người dùng:' prop='username'>
-                <el-input v-model='postForm.username' type='text' spellcheck='false' clearable />
+                <el-input v-model='postForm.username' placeholder='Nhập tên người dùng' type='text' spellcheck='false'
+                          clearable />
             </el-form-item>
             <el-form-item label='Email:' prop='email'>
-                <el-input v-model='postForm.email' type='text' spellcheck='false' clearable />
+                <el-input v-model='postForm.email' placeholder='Nhập email' type='text' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Mật khẩu:' prop='password'>
-                <el-input v-model='postForm.password' type='password' :show-password='true' clearable />
+                <el-input v-model='postForm.password' placeholder='Nhập mật khẩu' type='password' :show-password='true'
+                          clearable />
             </el-form-item>
             <el-form-item label='Nhập lại mật khẩu:' prop='confirmPassword'>
-                <el-input v-model='postForm.confirmPassword' type='password' :show-password='true' clearable />
+                <el-input v-model='postForm.confirmPassword' placeholder='Nhập lại mật khẩu' type='password'
+                          :show-password='true' clearable />
             </el-form-item>
 
         </el-form>

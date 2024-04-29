@@ -83,7 +83,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Nội dung' prop='body'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='750' trigger='click'>
+                <el-popover placement='bottom' :width='800' trigger='click'>
                     <template #reference>
                         <el-text truncated> {{ row.body }}</el-text>
                     </template>

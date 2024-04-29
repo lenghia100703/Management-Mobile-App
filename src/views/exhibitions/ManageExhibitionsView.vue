@@ -5,6 +5,9 @@ import { getAllNews } from '@/services/news'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import { convertDateTime } from '../../helpers/convertDateTime'
 import AddExhibitionModal from '@/components/modals/exhibitions/AddExhibitionModal.vue'
+import { getAllExhibition } from '@/services/exhibition'
+import DeleteExhibitionModal from '@/components/modals/exhibitions/DeleteExhibitionModal.vue'
+import EditExhibitionModal from '@/components/modals/exhibitions/EditExhibitionModal.vue'
 
 const tableData = ref<any[]>([])
 const totalData = ref<any>(0)
@@ -13,6 +16,8 @@ const searchLoading = ref(false)
 const searchName = ref('')
 
 const addExhibitionModal = ref<InstanceType<typeof AddExhibitionModal>>()
+const deleteExhibitionModal = ref<InstanceType<typeof DeleteExhibitionModal>>()
+const editExhibitionModal = ref<InstanceType<typeof EditExhibitionModal>>()
 
 const handleChangePage = async () => {
     await loadTableData(1)
@@ -25,7 +30,7 @@ const handleSearch = async () => {
 const loadTableData = async (page: any) => {
     tableLoading.value = true
     try {
-        const res = await getAllNews(page)
+        const res = await getAllExhibition(page)
         tableData.value = res.data
         totalData.value = res.totalData
     } catch (e) {
@@ -80,7 +85,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Chi tiết hiện vật' prop='description'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='750' trigger='click'>
+                <el-popover placement='bottom' :width='800' trigger='click'>
                     <template #reference>
                         <el-text truncated> {{ row.description }}</el-text>
                     </template>
@@ -106,9 +111,9 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Người tạo' :width='200' prop='createdBy'>
+        <el-table-column label='Người tạo' prop='createdBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.createdBy'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.createdBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.createdBy }}</el-text>
@@ -117,9 +122,9 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Người sửa' :width='200' prop='updatedBy'>
+        <el-table-column label='Người sửa' prop='updatedBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.updatedBy'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.updatedBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.updatedBy }}</el-text>
@@ -128,9 +133,9 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Ngày tạo' :width='200' prop='createdAt' sortable>
+        <el-table-column label='Ngày tạo' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.createdAt)'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='convertDateTime(row.createdAt)'>
                     <template #reference
                     >
                         <el-text truncated> {{ convertDateTime(row.createdAt) }}</el-text>
@@ -139,9 +144,9 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Ngày sửa' :width='200' prop='updatedAt' sortable>
+        <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.updatedAt)'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='convertDateTime(row.updatedAt)'>
                     <template #reference
                     >
                         <el-text truncated> {{ convertDateTime(row.updatedAt) }}</el-text>
@@ -153,13 +158,13 @@ onMounted(async () => {
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa tài khoản' placement='bottom'>
-                    <el-button type='primary' size='small' plain @click='editNewsModal?.openModal(scope.row)'
+                    <el-button type='primary' size='small' plain @click='editExhibitionModal?.openModal(scope.row)'
                     >Sửa
                     </el-button
                     >
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa tài khoản' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteNewsModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteExhibitionModal?.openModal(scope.row)' plain>Xóa
                     </el-button>
                 </el-tooltip>
             </template>
@@ -175,6 +180,8 @@ onMounted(async () => {
     </div>
 
     <AddExhibitionModal ref='addExhibitionModal' :call-back='() => loadTableData(1)' />
+    <DeleteExhibitionModal ref='deleteExhibitionModal' :call-back='() => loadTableData(1)' />
+    <EditExhibitionModal ref='editExhibitionModal' :call-back='() => loadTableData(1)' />
 </template>
 
 <style scoped>

@@ -17,6 +17,7 @@ const editForm = ref({
     email: '',
     phone: '',
     avatar: null,
+    avatarUrl: '',
 })
 
 const rules = reactive<FormRules>({
@@ -80,6 +81,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
             formData.append('email', editForm.value.email)
             formData.append('phone', editForm.value.phone)
             formData.append('avatar', editForm.value.avatar)
+            formData.append('avatarUrl', editForm.value.avatarUrl)
             await handleEditUser(formData)
         } else {
             return false
@@ -90,7 +92,8 @@ const submitForm = (formEl: typeof ElForm | null) => {
 const resetForm = (form: any) => {
     form.title = ''
     form.body = ''
-    form.image = null
+    form.avatar = null
+    form.avatarUrl = ''
 }
 
 const resetToDefault = (form: any) => {
@@ -98,6 +101,7 @@ const resetToDefault = (form: any) => {
     form.username = defaultData.value.username
     form.phone = defaultData.value.phone
     form.email = defaultData.value.email
+    form.avatarUrl = defaultData.value.avatar
 }
 
 const openModal = (data: any) => {
@@ -106,6 +110,7 @@ const openModal = (data: any) => {
     editForm.value.username = data.username
     editForm.value.email = data.email
     editForm.value.phone = data.phone
+    editForm.value.avatarUrl = data.avatar
     defaultData.value = data
 }
 
@@ -115,24 +120,34 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Sửa thông tin người dùng' width='40%' top='15vh'>
+    <el-dialog v-model='visible' title='Sửa thông tin người dùng' width='40%' top='8vh'>
         <el-form :model='editForm' label-position='top' ref='editFormRef' :rules='rules'>
             <el-form-item label='Email:' prop='email'>
-                <el-input v-model='editForm.email' type='text' spellcheck='false' disabled />
+                <el-input v-model='editForm.email' placeholder='Nhập email' type='text' spellcheck='false' disabled />
             </el-form-item>
             <el-form-item label='Tên người dùng:' prop='username'>
-                <el-input v-model='editForm.username' type='text' spellcheck='false' clearable />
+                <el-input v-model='editForm.username' placeholder='Nhập tên người dùng' type='text' spellcheck='false'
+                          clearable />
             </el-form-item>
             <el-form-item label='Số điện thoại:' prop='phone'>
-                <el-input v-model='editForm.phone' type='text' spellcheck='false' clearable />
+                <el-input v-model='editForm.phone' placeholder='Nhập số điện thoại' type='text' spellcheck='false'
+                          clearable />
             </el-form-item>
-            <el-form-item label='Ảnh đại diện' prop='avatar'>
+            <el-form-item label='Ảnh đại diện:' prop='avatarUrl'>
+                <el-input v-model='editForm.avatarUrl' placeholder='Nhập đường dẫn ảnh'
+                          :disabled='editForm.avatar !== null' type='text' spellcheck='false' clearable />
+            </el-form-item>
+            <div class='or'>Hoặc chọn ảnh từ thiết bị:</div>
+            <el-form-item prop='avatar'>
                 <input
                     type='file'
                     class='avatar-input'
                     ref='imageInput'
+                    :disabled="editForm.avatarUrl !== ''"
                     @change='handleChangeImage'
+                    title='Chọn ảnh từ thiết bị của bạn'
                 />
+                <label class='btn-up' for='upload-file'>+</label>
             </el-form-item>
         </el-form>
         <template #footer>
@@ -152,5 +167,42 @@ defineExpose({
 <style scoped>
 .left-dialog-footer {
     float: left;
+}
+
+.or {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.left-dialog-footer {
+    float: left;
+}
+
+label {
+    padding: 32px 43px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: white;
+    color: #8c939d;
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    position: absolute;
+    z-index: 2;
+}
+
+.avatar-input {
+    opacity: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.avatar-input:hover ~ .btn-up {
+    border-color: var(--el-color-primary);
+    color: var(--el-color-primary);
 }
 </style>
