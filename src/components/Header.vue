@@ -19,7 +19,9 @@ const handleOpenDrawer = () => {
         <template v-if='authenticationStore.authenticated'>
             <el-menu class='menu' mode='horizontal' :ellipsis='false' background-color='#fff' menu-trigger='click'
                      :default-active='$route.path' router>
-                <MenuHeader />
+                <el-menu-item class='desktop-logo-container no-hover' :route='PATHS.HOME' index='1'>
+                    <img src='@/assets/images/logo.png' class='desktop-logo' alt='logo-app' />
+                </el-menu-item>
 
                 <div class='flex-grow'></div>
                 <el-menu-item class='no-hover'>
@@ -34,7 +36,9 @@ const handleOpenDrawer = () => {
         <template v-else>
             <el-menu class='menu' mode='horizontal' :ellipsis='false' background-color='#fff' menu-trigger='click'
                      :default-active='$route.path' router>
-                <MenuHeader />
+                <el-menu-item class='desktop-logo-container no-hover' :route='PATHS.HOME' index='1'>
+                    <img src='@/assets/images/logo.png' class='desktop-logo' alt='logo-app' />
+                </el-menu-item>
                 <div class='flex-grow'></div>
                 <el-menu-item
                     class='no-hover'
@@ -59,6 +63,11 @@ const handleOpenDrawer = () => {
 </template>
 
 <style scoped>
+.desktop-logo {
+    width: auto;
+    height: 65px;
+}
+
 .menu {
     color: white;
 }

@@ -118,7 +118,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Người tạo' prop='createdBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.createdBy'>
+                <el-popover placement='bottom' trigger='click' :width='200' :content='row.createdBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.createdBy }}</el-text>
@@ -129,7 +129,7 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Người sửa' prop='updatedBy'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='row.updatedBy'>
+                <el-popover placement='bottom' trigger='click' :width='200' :content='row.updatedBy'>
                     <template #reference
                     >
                         <el-text truncated> {{ row.updatedBy }}</el-text>
@@ -140,23 +140,19 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column label='Ngày tạo' prop='createdAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.createdAt)'>
-                    <template #reference
-                    >
+                <el-popover placement='bottom' trigger='click' :width='200' :content='convertDateTime(row.createdAt)'>
+                    <template #reference>
                         <el-text truncated> {{ convertDateTime(row.createdAt) }}</el-text>
-                    </template
-                    >
+                    </template>
                 </el-popover>
             </template>
         </el-table-column>
         <el-table-column label='Ngày sửa' prop='updatedAt' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' trigger='click' :content='convertDateTime(row.updatedAt)'>
-                    <template #reference
-                    >
+                <el-popover placement='bottom' trigger='click' :width='200' :content='convertDateTime(row.updatedAt)'>
+                    <template #reference>
                         <el-text truncated> {{ convertDateTime(row.updatedAt) }}</el-text>
-                    </template
-                    >
+                    </template>
                 </el-popover>
             </template>
         </el-table-column>

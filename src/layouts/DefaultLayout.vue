@@ -2,6 +2,7 @@
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
+import NavigationDesktop from '@/layouts/NavigationDesktop.vue'
 
 const authenticationStore = useAuthenticationStore()
 
@@ -11,15 +12,20 @@ authenticationStore.loadFromServer()
 <template>
     <div class='common-layout'>
         <el-container>
-            <el-header id='header'>
-                <Header />
-            </el-header>
-            <el-main id='main'>
-                <router-view></router-view>
-            </el-main>
-            <el-footer id='footer'>
-                <Footer />
-            </el-footer>
+            <el-aside width='auto'>
+                <NavigationDesktop />
+            </el-aside>
+            <el-container>
+                <el-header id='header'>
+                    <Header />
+                </el-header>
+                <el-main id='main'>
+                    <router-view></router-view>
+                </el-main>
+                <el-footer id='footer'>
+                    <Footer />
+                </el-footer>
+            </el-container>
         </el-container>
     </div>
 </template>

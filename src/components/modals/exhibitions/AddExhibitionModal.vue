@@ -130,10 +130,10 @@ defineExpose({
                 <el-input v-model='postForm.description' spellcheck='false' type='textarea' />
             </el-form-item>
 
-            <el-form-item label='Ảnh minh họa' prop='imageUrl'>
+            <el-form-item label='Ảnh minh họa:' prop='imageUrl'>
                 <el-input v-model='postForm.imageUrl' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />
             </el-form-item>
-            <div class='or'>hoặc</div>
+            <div class='or'>Hoặc chọn ảnh từ thiết bị:</div>
             <el-form-item prop='image'>
                 <input
                     type='file'
@@ -142,7 +142,7 @@ defineExpose({
                     :disabled="postForm.imageUrl !== ''"
                     @change='handleChangeImage'
                 />
-
+                <label class="btn-up" for="upload-file">+</label>
             </el-form-item>
         </el-form>
         <template #footer>
@@ -167,6 +167,34 @@ defineExpose({
 
 .left-dialog-footer {
     float: left;
+}
+
+label {
+    padding: 32px 43px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: white;
+    color: #8c939d;
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    position: absolute;
+    z-index: 2;
+}
+
+.avatar-input {
+    opacity: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.avatar-input:hover ~ .btn-up {
+    border-color: var(--el-color-primary);
+    color: var(--el-color-primary);
 }
 
 </style>

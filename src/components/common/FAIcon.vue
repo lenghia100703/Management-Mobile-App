@@ -59,7 +59,6 @@ function onClick() {
 
 <style scoped>
 .icon {
-    margin-right: 10px;
     display: inline-flex;
     align-items: center;
 }
