@@ -45,7 +45,7 @@ defineExpose({
 
 <template>
     <el-dialog v-model='visible' title='Xóa người dùng' width='30%' top='25vh'>
-        <span> Bạn có muốn người dùng có
+        <span> Bạn có muốn xóa người dùng có
             <el-text type='danger' class='news-id'> ID = {{ userId }} </el-text>
             không ?
         </span>

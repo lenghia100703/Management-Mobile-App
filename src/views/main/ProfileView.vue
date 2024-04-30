@@ -1,11 +1,11 @@
 <script setup lang='ts'>
 
-
 import { onMounted, reactive, ref } from 'vue'
 import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 import ChangePasswordModal from '@/components/modals/password/ChangePasswordModal.vue'
 import { ElForm, ElMessage, FormRules } from 'element-plus'
 import { editUser } from '@/services/user'
+import { loadingFullScreen } from '@/utils/loadingFullScreen'
 
 const useAuthentication = useAuthenticationStore()
 const changePasswordModal = ref<InstanceType<typeof ChangePasswordModal>>()
@@ -72,6 +72,7 @@ const resetForm = (form: any) => {
 
 onMounted(() => {
     useAuthentication.loadFromServer()
+    loadingFullScreen()
 })
 
 </script>

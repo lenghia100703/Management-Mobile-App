@@ -9,6 +9,10 @@ import ManageUsersView from '@/views/users/ManageUsersView.vue'
 import ManageExhibitionsView from '@/views/exhibitions/ManageExhibitionsView.vue'
 import ProfileView from '@/views/main/ProfileView.vue'
 import NotAuthenticationLayout from '@/layouts/NotAuthenticationLayout.vue'
+import ManageQuestionsView from '@/views/questions/ManageQuestionsView.vue'
+import ManageLocationsView from '@/views/locations/ManageLocationsView.vue'
+import ManagePostsView from '@/views/posts/ManagePostsView.vue'
+import ManageTransactionsView from '@/views/transactions/ManageTransactionsView.vue'
 
 
 export const router = createRouter({
@@ -38,6 +42,26 @@ export const router = createRouter({
                     path: PATHS.ADMIN_MANAGE_EXHIBITION,
                     component: ManageExhibitionsView,
                     name: 'manage-exhibitions',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_QUESTION,
+                    component: ManageQuestionsView,
+                    name: 'manage-questions',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_LOCATION,
+                    component: ManageLocationsView,
+                    name: 'manage-locations',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_POST,
+                    component: ManagePostsView,
+                    name: 'manage-posts',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_TRANSACTION,
+                    component: ManageTransactionsView,
+                    name: 'manage-transactions',
                 },
                 {
                     path: PATHS.PROFILE,

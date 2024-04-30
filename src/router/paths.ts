@@ -11,4 +11,10 @@ export const PATHS = {
     ADMIN_MANAGE_EXHIBITION: '/admin/exhibitions',
 
     ADMIN_MANAGE_QUESTION: '/admin/questions',
+
+    ADMIN_MANAGE_LOCATION: '/admin/locations',
+
+    ADMIN_MANAGE_POST: '/admin/posts',
+
+    ADMIN_MANAGE_TRANSACTION: '/admin/transactions',
 }

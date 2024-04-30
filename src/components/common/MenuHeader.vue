@@ -19,6 +19,15 @@ import { PATHS } from '@/router/paths'
     <el-menu-item :index='PATHS.ADMIN_MANAGE_QUESTION' :route='PATHS.ADMIN_MANAGE_QUESTION'>
         <template #title>Quản lý câu hỏi</template>
     </el-menu-item>
+    <el-menu-item :index='PATHS.ADMIN_MANAGE_TRANSACTION' :route='PATHS.ADMIN_MANAGE_TRANSACTION'>
+        <template #title>Quản lý giao dịch</template>
+    </el-menu-item>
+    <el-menu-item :index='PATHS.ADMIN_MANAGE_POST' :route='PATHS.ADMIN_MANAGE_POST'>
+        <template #title>Quản lý bài viết</template>
+    </el-menu-item>
+    <el-menu-item :index='PATHS.ADMIN_MANAGE_LOCATION' :route='PATHS.ADMIN_MANAGE_QUESTION'>
+        <template #title>Quản lý địa điểm</template>
+    </el-menu-item>
 </template>
 
 <style scoped>
