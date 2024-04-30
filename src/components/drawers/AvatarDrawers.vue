@@ -31,7 +31,8 @@ defineExpose({
             <span class='avatar'>{{ userInfo?.username }}</span>
         </div>
         <el-menu :ellipsis='false' class='menu-bar' menu-trigger='click' mode='vertical' router>
-            <el-menu-item :index='PATHS.PROFILE' :route='PATHS.PROFILE'> Hồ sơ cá nhân</el-menu-item>
+            <el-menu-item :index='PATHS.PROFILE' :route='PATHS.PROFILE' @click='visible = false'> Hồ sơ cá nhân
+            </el-menu-item>
             <el-menu-item @click='handleLogout'> Đăng xuất</el-menu-item>
             <el-menu-item @click='visible = false'> Đóng</el-menu-item>
         </el-menu>

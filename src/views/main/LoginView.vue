@@ -100,10 +100,10 @@ onMounted(() => {
                         </el-form-item>
                         <el-form-item>
                             <div class='action'>
-                                <div class='redirect'>
+                                <span class='redirect'>
                                     Bạn chưa có tài khoản?
                                     <router-link to='/register' class='to-register'>Đăng ký</router-link>
-                                </div>
+                                </span>
                                 <el-button
                                     class='btn-submit'
                                     :loading='submitLoading'
@@ -111,7 +111,8 @@ onMounted(() => {
                                     @click='submitForm(loginFormRef)'
                                     @keyup.enter='submitForm(loginFormRef)'
                                     native-type='submit'
-                                >Đăng nhập
+                                >
+                                    Đăng nhập
                                 </el-button>
                             </div>
                         </el-form-item>
@@ -123,5 +124,15 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 
+
+.btn-submit {
+    width: 30%;
+}
 </style>

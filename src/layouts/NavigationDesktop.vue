@@ -3,7 +3,7 @@
 import { PATHS } from '@/router/paths'
 import FAIcon from '@/components/common/FAIcon.vue'
 import { ref } from 'vue'
-import MenuHeader from '@/components/MenuHeader.vue'
+import MenuHeader from '@/components/common/MenuHeader.vue'
 
 const isCollapse = ref(true)
 

@@ -32,3 +32,35 @@ export const ExhibitionAPI = {
     CREATE_EXHIBITION: '/exhibition',
     EXHIBITION_BY_ID: (exhibitionId: any) => `/exhibition/${exhibitionId}`,
 }
+
+export const QuestionAPI = {
+    LIST_QUESTIONS: (page: any) => `/question?page=${page}`,
+    EDIT_QUESTION: (questionId: any) => `/question/${questionId}`,
+    DELETE_QUESTION: (questionId: any) => `/question/${questionId}`,
+    CREATE_QUESTION: '/question',
+    QUESTION_BY_ID: (questionId: any) => `/question/${questionId}`,
+}
+
+export const LocationAPI = {
+    LIST_LOCATIONS: (page: any) => `/location?page=${page}`,
+    EDIT_LOCATION: (locationId: any) => `/location/${locationId}`,
+    DELETE_LOCATION: (locationId: any) => `/location/${locationId}`,
+    CREATE_LOCATION: '/location',
+    LOCATION_BY_ID: (locationId: any) => `/location/${locationId}`,
+}
+
+export const PostAPI = {
+    LIST_POSTS: (page: any) => `/post?page=${page}`,
+    EDIT_POST: (postId: any) => `/post/${postId}`,
+    DELETE_POST: (postId: any) => `/post/${postId}`,
+    CREATE_POST: '/post',
+    POST_BY_ID: (postId: any) => `/post/${postId}`,
+}
+
+export const TransactionAPI = {
+    LIST_TRANSACTIONS: (page: any) => `/transaction?page=${page}`,
+    EDIT_TRANSACTION: (transactionId: any) => `/transaction/${transactionId}`,
+    DELETE_TRANSACTION: (transactionId: any) => `/transaction/${transactionId}`,
+    CREATE_TRANSACTION: '/transaction',
+    TRANSACTION_BY_ID: (transactionId: any) => `/transaction/${transactionId}`,
+}

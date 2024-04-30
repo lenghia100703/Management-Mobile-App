@@ -21,3 +21,8 @@ export const deleteUser = async (userId: any) => {
 export const editUser = async (userId: any, payload: any) => {
     await httpFile.put(UserAPI.EDIT_USER(userId), payload)
 }
+
+export const changePassword = async (userId: any, payload: any) => {
+    await http.put(UserAPI.CHANGE_PASSWORD(userId), payload)
+}
+

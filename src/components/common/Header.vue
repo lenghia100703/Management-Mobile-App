@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import MenuHeader from '@/components/MenuHeader.vue'
+import MenuHeader from '@/components/common/MenuHeader.vue'
 import { PATHS } from '@/router/paths'
 import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ const handleOpenDrawer = () => {
             <el-menu class='menu' mode='horizontal' :ellipsis='false' background-color='#fff' menu-trigger='click'
                      :default-active='$route.path' router>
                 <el-menu-item class='desktop-logo-container no-hover' :route='PATHS.HOME' index='1'>
-                    <img src='@/assets/images/logo.png' class='desktop-logo' alt='logo-app' />
+                    <img src='../../assets/images/logo.png' class='desktop-logo' alt='logo-app' />
                 </el-menu-item>
 
                 <div class='flex-grow'></div>
@@ -37,7 +37,7 @@ const handleOpenDrawer = () => {
             <el-menu class='menu' mode='horizontal' :ellipsis='false' background-color='#fff' menu-trigger='click'
                      :default-active='$route.path' router>
                 <el-menu-item class='desktop-logo-container no-hover' :route='PATHS.HOME' index='1'>
-                    <img src='@/assets/images/logo.png' class='desktop-logo' alt='logo-app' />
+                    <img src='../../assets/images/logo.png' class='desktop-logo' alt='logo-app' />
                 </el-menu-item>
                 <div class='flex-grow'></div>
                 <el-menu-item

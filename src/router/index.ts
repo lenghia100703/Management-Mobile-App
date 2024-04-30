@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import HomeView from '@/views/main/HomeView.vue'
 import { PATHS } from '@/router/paths'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ManageNewsView from '@/views/news/ManageNewsView.vue'
@@ -7,6 +7,8 @@ import LoginView from '@/views/main/LoginView.vue'
 import RegisterView from '@/views/main/RegisterView.vue'
 import ManageUsersView from '@/views/users/ManageUsersView.vue'
 import ManageExhibitionsView from '@/views/exhibitions/ManageExhibitionsView.vue'
+import ProfileView from '@/views/main/ProfileView.vue'
+import NotAuthenticationLayout from '@/layouts/NotAuthenticationLayout.vue'
 
 
 export const router = createRouter({
@@ -27,6 +29,27 @@ export const router = createRouter({
                     component: ManageNewsView,
                     name: 'manage-news',
                 },
+                {
+                    path: PATHS.ADMIN_MANAGE_USER,
+                    component: ManageUsersView,
+                    name: 'manage-users',
+                },
+                {
+                    path: PATHS.ADMIN_MANAGE_EXHIBITION,
+                    component: ManageExhibitionsView,
+                    name: 'manage-exhibitions',
+                },
+                {
+                    path: PATHS.PROFILE,
+                    component: ProfileView,
+                    name: 'profile',
+                }
+            ],
+        },
+        {
+            path: PATHS.HOME,
+            component: NotAuthenticationLayout,
+            children: [
                 {
                     path: PATHS.LOGIN,
                     component: LoginView,
@@ -55,17 +78,7 @@ export const router = createRouter({
                     //     }
                     // }
                 },
-                {
-                    path: PATHS.ADMIN_MANAGE_USER,
-                    component: ManageUsersView,
-                    name: 'manage-users',
-                },
-                {
-                    path: PATHS.ADMIN_MANAGE_EXHIBITION,
-                    component: ManageExhibitionsView,
-                    name: 'manage-exhibitions',
-                },
-            ],
-        },
+            ]
+        }
     ],
 })
