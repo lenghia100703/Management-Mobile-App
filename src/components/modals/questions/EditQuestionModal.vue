@@ -179,5 +179,7 @@ defineExpose({
 </template>
 
 <style scoped>
-
+.left-dialog-footer {
+    float: left;
+}
 </style>

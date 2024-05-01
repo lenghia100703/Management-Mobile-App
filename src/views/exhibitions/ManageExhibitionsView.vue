@@ -157,13 +157,13 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
-                <el-tooltip effect='dark' content='Chỉnh sửa tài khoản' placement='bottom'>
+                <el-tooltip effect='dark' content='Chỉnh sửa hiện vật' placement='bottom'>
                     <el-button type='primary' size='small' plain @click='editExhibitionModal?.openModal(scope.row)'
                     >Sửa
                     </el-button
                     >
                 </el-tooltip>
-                <el-tooltip effect='dark' content='Xóa tài khoản' placement='bottom'>
+                <el-tooltip effect='dark' content='Xóa hiện vật' placement='bottom'>
                     <el-button type='danger' size='small' @click='deleteExhibitionModal?.openModal(scope.row)' plain>Xóa
                     </el-button>
                 </el-tooltip>

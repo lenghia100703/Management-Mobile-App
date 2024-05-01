@@ -25,7 +25,7 @@ import { PATHS } from '@/router/paths'
     <el-menu-item :index='PATHS.ADMIN_MANAGE_POST' :route='PATHS.ADMIN_MANAGE_POST'>
         <template #title>Quản lý bài viết</template>
     </el-menu-item>
-    <el-menu-item :index='PATHS.ADMIN_MANAGE_LOCATION' :route='PATHS.ADMIN_MANAGE_QUESTION'>
+    <el-menu-item :index='PATHS.ADMIN_MANAGE_LOCATION' :route='PATHS.ADMIN_MANAGE_LOCATION'>
         <template #title>Quản lý địa điểm</template>
     </el-menu-item>
 </template>
