@@ -7,6 +7,7 @@ import EditNewsModal from '@/components/modals/news/EditNewsModal.vue'
 import DeleteNewsModal from '@/components/modals/news/DeleteNewsModal.vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import { convertDateTime } from '@/helpers/convertDateTime'
+import FAIcon from '@/components/common/FAIcon.vue'
 
 const addNewsModal = ref<InstanceType<typeof AddNewsModal>>()
 const editNewsModal = ref<InstanceType<typeof EditNewsModal>>()
@@ -53,12 +54,16 @@ onMounted(async () => {
             <el-input class='search-input' placeholder='Tìm tin tức - sự kiện...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
                 Tìm kiếm
             </el-button>
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addNewsModal?.openModal()'>Thêm tin tức</el-button>
+            <el-button plain type='primary' @click='addNewsModal?.openModal()'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-plus' />
+                Thêm tin tức
+            </el-button>
         </div>
     </div>
     <el-table
@@ -157,12 +162,14 @@ onMounted(async () => {
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa tin tức - sự kiện' placement='bottom'>
                     <el-button type='primary' size='small' plain @click='editNewsModal?.openModal(scope.row)'
-                    >Sửa
+                    >
+                        <FAIcon color='' icon='fa-regular fa-pen-to-square' />
                     </el-button
                     >
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa tin tức - sự kiện' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteNewsModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteNewsModal?.openModal(scope.row)' plain>
+                        <FAIcon color='' icon='fa-regular fa-trash-can' />
                     </el-button>
                 </el-tooltip>
             </template>

@@ -1,27 +1,25 @@
 <script setup lang='ts'>
 
-import { convertDateTime } from '@/helpers/convertDateTime'
-import { ref } from 'vue'
-import AddQuestionModal from '@/components/modals/questions/AddQuestionModal.vue'
-import DeleteQuestionModal from '@/components/modals/questions/DeleteQuestionModal.vue'
-import EditQuestionModal from '@/components/modals/questions/EditQuestionModal.vue'
-import { onMounted } from 'vue'
+import AddBannerModal from '@/components/modals/banners/AddBannerModal.vue'
+import { onMounted, ref } from 'vue'
+import { getAllBanner } from '@/services/banner'
+import EditBannerModal from '@/components/modals/banners/EditBannerModal.vue'
+import DeleteBannerModal from '@/components/modals/banners/DeleteBannerModal.vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
-import { getAllQuestion } from '@/services/question'
+import { convertDateTime } from '@/helpers/convertDateTime'
 import FAIcon from '@/components/common/FAIcon.vue'
 
+const addBannerModal = ref<InstanceType<typeof AddBannerModal>>()
+const editBannerModal = ref<InstanceType<typeof EditBannerModal>>()
+const deleteBannerModal = ref<InstanceType<typeof DeleteBannerModal>>()
 const tableData = ref<any[]>([])
 const totalData = ref<any>(0)
 const tableLoading = ref(false)
 const searchLoading = ref(false)
 const searchName = ref('')
 
-const addQuestionModal = ref<InstanceType<typeof AddQuestionModal>>()
-const deleteQuestionModal = ref<InstanceType<typeof DeleteQuestionModal>>()
-const editQuestionModal = ref<InstanceType<typeof EditQuestionModal>>()
-
-const handleChangePage = async () => {
-    await loadTableData(1)
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {
@@ -31,7 +29,7 @@ const handleSearch = async () => {
 const loadTableData = async (page: any) => {
     tableLoading.value = true
     try {
-        const res = await getAllQuestion(page)
+        const res = await getAllBanner(page)
         tableData.value = res.data
         totalData.value = res.totalData
     } catch (e) {
@@ -49,11 +47,11 @@ onMounted(async () => {
 
 <template>
     <div class='title-page'>
-        <h1>Quản Lý Câu Hỏi</h1>
+        <h1>Quản Lý Ảnh Bìa</h1>
     </div>
     <div class='search'>
         <div class='left'>
-            <el-input class='search-input' placeholder='Tìm câu hỏi...' type='text' v-model='searchName'
+            <el-input class='search-input' placeholder='Tìm ảnh bìa...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
                 <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
@@ -62,9 +60,9 @@ onMounted(async () => {
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addQuestionModal?.openModal()'>
+            <el-button plain type='primary' @click='addBannerModal?.openModal()'>
                 <FAIcon color='' class='icon-margin' icon='fa-solid fa-plus' />
-                Thêm câu hỏi
+                Thêm ảnh bìa
             </el-button>
         </div>
     </div>
@@ -72,71 +70,39 @@ onMounted(async () => {
         :data='tableData'
         v-loading='tableLoading'
         :border='true'
-        empty-text='Không có câu hỏi nào nào'
+        empty-text='Không có ảnh nào'
         class='table'
         :default-sort="{ prop: 'id', order: 'ascending' }"
     >
         <el-table-column label='ID' prop='id' width='80' sortable :align="'center'"></el-table-column>
-        <el-table-column label='Câu hỏi' prop='question' sortable>
+        <el-table-column label='Tiêu đề' prop='title' sortable>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.question'>
+                <el-popover placement='bottom' :width='200' trigger='click' :content='row.title'>
                     <template #reference
                     >
-                        <el-text truncated> {{ row.question }}</el-text>
+                        <el-text truncated> {{ row.title }}</el-text>
                     </template
                     >
                 </el-popover>
             </template>
         </el-table-column>
-        <el-table-column label='Đáp án 1' prop='answer1'>
+        <el-table-column label='Hoạt động' prop='isActive'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='click' :content='row.answerId.answer1'>
-                    <template #reference>
-                        <el-text truncated> {{ row.answerId.answer1 }}</el-text>
-                    </template>
-                </el-popover>
+                <el-text tag='b' :type='(row.isActive === "true") ? "success" : "danger"' truncated>
+                    {{ (row.isActive === "true") ? "Đang hoạt động" : "Không hoạt động" }}
+                </el-text>
             </template>
         </el-table-column>
-        <el-table-column label='Đáp án 2' prop='answer2'>
+        <el-table-column label='Ảnh' prop='image'>
             <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='hover' :content='row.answerId.answer2'>
+                <el-popover placement='bottom' :show-after='400' :width='300' trigger='hover'>
                     <template #reference>
                         <el-text truncated>
-                            {{ row.answerId.answer2 }}
+                            <el-link :href='row.image' target='_blank'>{{ row.image }}</el-link>
                         </el-text>
                     </template>
-                </el-popover>
-            </template>
-        </el-table-column>
-        <el-table-column label='Đáp án 3' prop='answer3'>
-            <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='hover' :content='row.answerId.answer3'>
-                    <template #reference>
-                        <el-text truncated>
-                            {{ row.answerId.answer3 }}
-                        </el-text>
-                    </template>
-                </el-popover>
-            </template>
-        </el-table-column>
-        <el-table-column label='Đáp án 4' prop='answer4'>
-            <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='hover' :content='row.answerId.answer4'>
-                    <template #reference>
-                        <el-text truncated>
-                            {{ row.answerId.answer4 }}
-                        </el-text>
-                    </template>
-                </el-popover>
-            </template>
-        </el-table-column>
-        <el-table-column label='Đáp án đúng' prop='correctAnswer'>
-            <template #default='{ row }'>
-                <el-popover placement='bottom' :width='200' trigger='hover' :content='row.correctAnswer'>
-                    <template #reference>
-                        <el-text truncated>
-                            {{ row.correctAnswer }}
-                        </el-text>
+                    <template #default>
+                        <el-image style='max-width: 300px; max-height: 300px;' :src='row.image' alt='Image' />
                     </template>
                 </el-popover>
             </template>
@@ -187,13 +153,15 @@ onMounted(async () => {
         </el-table-column>
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
-                <el-tooltip effect='dark' content='Chỉnh sửa câu hỏi' placement='bottom'>
-                    <el-button type='primary' size='small' plain @click='editQuestionModal?.openModal(scope.row)'>
+                <el-tooltip effect='dark' content='Chỉnh sửa ảnh bìa' placement='bottom'>
+                    <el-button type='primary' size='small' plain @click='editBannerModal?.openModal(scope.row)'
+                    >
                         <FAIcon color='' icon='fa-regular fa-pen-to-square' />
-                    </el-button>
+                    </el-button
+                    >
                 </el-tooltip>
-                <el-tooltip effect='dark' content='Xóa câu hỏi' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteQuestionModal?.openModal(scope.row)' plain>
+                <el-tooltip effect='dark' content='Xóa ảnh bìa' placement='bottom'>
+                    <el-button type='danger' size='small' @click='deleteBannerModal?.openModal(scope.row)' plain>
                         <FAIcon color='' icon='fa-regular fa-trash-can' />
                     </el-button>
                 </el-tooltip>
@@ -209,9 +177,9 @@ onMounted(async () => {
         />
     </div>
 
-    <AddQuestionModal ref='addQuestionModal' :call-back='() => loadTableData(1)' />
-    <DeleteQuestionModal ref='deleteQuestionModal' :call-back='() => loadTableData(1)' />
-    <EditQuestionModal ref='editQuestionModal' :call-back='() => loadTableData(1)' />
+    <AddBannerModal ref='addBannerModal' :call-back='() => loadTableData(1)' />
+    <EditBannerModal ref='editBannerModal' :call-back='() => loadTableData(1)' />
+    <DeleteBannerModal ref='deleteBannerModal' :call-back='() => loadTableData(1)' />
 </template>
 
 <style scoped>

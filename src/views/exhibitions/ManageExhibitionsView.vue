@@ -8,6 +8,7 @@ import AddExhibitionModal from '@/components/modals/exhibitions/AddExhibitionMod
 import { getAllExhibition } from '@/services/exhibition'
 import DeleteExhibitionModal from '@/components/modals/exhibitions/DeleteExhibitionModal.vue'
 import EditExhibitionModal from '@/components/modals/exhibitions/EditExhibitionModal.vue'
+import FAIcon from '@/components/common/FAIcon.vue'
 
 const tableData = ref<any[]>([])
 const totalData = ref<any>(0)
@@ -55,12 +56,16 @@ onMounted(async () => {
             <el-input class='search-input' placeholder='Tìm hiện vật...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
                 Tìm kiếm
             </el-button>
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addExhibitionModal?.openModal()'>Thêm hiện vật</el-button>
+            <el-button plain type='primary' @click='addExhibitionModal?.openModal()'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-plus' />
+                Thêm hiện vật
+            </el-button>
         </div>
     </div>
     <el-table
@@ -159,12 +164,14 @@ onMounted(async () => {
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa hiện vật' placement='bottom'>
                     <el-button type='primary' size='small' plain @click='editExhibitionModal?.openModal(scope.row)'
-                    >Sửa
+                    >
+                        <FAIcon color='' icon='fa-regular fa-pen-to-square' />
                     </el-button
                     >
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa hiện vật' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteExhibitionModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteExhibitionModal?.openModal(scope.row)' plain>
+                        <FAIcon color='' icon='fa-regular fa-trash-can' />
                     </el-button>
                 </el-tooltip>
             </template>

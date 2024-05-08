@@ -64,3 +64,20 @@ export const TransactionAPI = {
     CREATE_TRANSACTION: '/transaction',
     TRANSACTION_BY_ID: (transactionId: any) => `/transaction/${transactionId}`,
 }
+
+export const TicketAPI = {
+    LIST_TICKETS: (page: any) => `/ticket?page=${page}`,
+    EDIT_TICKET: (ticketId: any) => `/ticket/${ticketId}`,
+    DELETE_TICKET: (ticketId: any) => `/ticket/${ticketId}`,
+    CREATE_TICKET: '/ticket',
+    TICKET_BY_ID: (ticketId: any) => `/ticket/${ticketId}`,
+}
+
+export const BannerAPI = {
+    LIST_BANNERS: (page: any) => `/banner?page=${page}`,
+    EDIT_BANNER: (bannerId: any) => `/banner/${bannerId}`,
+    DELETE_BANNER: (bannerId: any) => `/banner/${bannerId}`,
+    CREATE_BANNER: '/banner',
+    BANNER_BY_ID: (bannerId: any) => `/banner/${bannerId}`,
+    BANNER_IS_ACTIVE: `/banner/active`
+}

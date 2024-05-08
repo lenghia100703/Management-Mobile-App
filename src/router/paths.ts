@@ -3,6 +3,7 @@ export const PATHS = {
     LOGIN: '/login',
     REGISTER: '/register',
     PROFILE: '/profile',
+    SETTING: '/setting',
 
     ADMIN_MANAGE_USER: '/admin/users',
 
@@ -17,4 +18,8 @@ export const PATHS = {
     ADMIN_MANAGE_POST: '/admin/posts',
 
     ADMIN_MANAGE_TRANSACTION: '/admin/transactions',
+
+    ADMIN_MANAGE_TICKET: '/admin/tickets',
+
+    ADMIN_MANAGE_BANNER: '/admin/banners',
 }

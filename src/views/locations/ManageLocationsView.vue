@@ -8,6 +8,7 @@ import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import AddLocationModal from '@/components/modals/locations/AddLocationModal.vue'
 import DeleteLocationModal from '@/components/modals/locations/DeleteLocationModal.vue'
 import EditLocationModal from '@/components/modals/locations/EditLocationModal.vue'
+import FAIcon from '@/components/common/FAIcon.vue'
 
 const tableData = ref<any[]>([])
 const totalData = ref<any>(0)
@@ -55,12 +56,16 @@ onMounted(async () => {
             <el-input class='search-input' placeholder='Tìm địa điểm...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
                 Tìm kiếm
             </el-button>
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addLocationModal?.openModal()'>Thêm địa điểm</el-button>
+            <el-button plain type='primary' @click='addLocationModal?.openModal()'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-plus' />
+                Thêm địa điểm
+            </el-button>
         </div>
     </div>
     <el-table
@@ -162,12 +167,14 @@ onMounted(async () => {
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa địa điểm' placement='bottom'>
                     <el-button type='primary' size='small' plain @click='editLocationModal?.openModal(scope.row)'
-                    >Sửa
+                    >
+                        <FAIcon color='' icon='fa-regular fa-pen-to-square' />
                     </el-button
                     >
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa địa điểm' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteLocationModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteLocationModal?.openModal(scope.row)' plain>
+                        <FAIcon color='' icon='fa-regular fa-trash-can' />
                     </el-button>
                 </el-tooltip>
             </template>

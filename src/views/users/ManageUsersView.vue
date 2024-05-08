@@ -7,6 +7,7 @@ import EditUserModal from '@/components/modals/users/EditUserModal.vue'
 import DeleteUserModal from '@/components/modals/users/DeleteUserModal.vue'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
 import { convertDateTime } from '@/helpers/convertDateTime'
+import FAIcon from '@/components/common/FAIcon.vue'
 
 const tableData = ref<any[]>([])
 const totalData = ref<any>(0)
@@ -54,12 +55,16 @@ onMounted(async () => {
             <el-input class='search-input' placeholder='Tìm người dùng...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
                 Tìm kiếm
             </el-button>
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addUserModal?.openModal()'>Thêm người dùng</el-button>
+            <el-button plain type='primary' @click='addUserModal?.openModal()'>
+                <FAIcon icon='fa-solid fa-plus' color='' class='icon-margin' />
+                Thêm người dùng
+            </el-button>
         </div>
     </div>
     <el-table
@@ -161,13 +166,13 @@ onMounted(async () => {
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa tài khoản' placement='bottom'>
-                    <el-button type='primary' size='small' plain @click='editUserModal?.openModal(scope.row)'
-                    >Sửa
-                    </el-button
-                    >
+                    <el-button type='primary' size='small' plain @click='editUserModal?.openModal(scope.row)'>
+                        <FAIcon icon='fa-regular fa-pen-to-square' color='' />
+                    </el-button>
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa tài khoản' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deleteUserModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deleteUserModal?.openModal(scope.row)' plain>
+                        <FAIcon icon='fa-regular fa-trash-can' color='' />
                     </el-button>
                 </el-tooltip>
             </template>
@@ -222,5 +227,11 @@ onMounted(async () => {
 
 .pagination {
     float: right;
+}
+</style>
+
+<style>
+.icon-margin {
+    margin-right: 6px;
 }
 </style>

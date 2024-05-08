@@ -74,7 +74,6 @@ const handleCreatePost = async (data: any) => {
 const handleChangeImage = () => {
     if (imageInput.value?.files && imageInput.value.files[0]) {
         postForm.value.image = imageInput.value.files[0]
-        console.log(postForm.value.image)
     }
 }
 

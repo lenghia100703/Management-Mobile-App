@@ -1,5 +1,4 @@
 export const convertDateTime = (str: any) => {
-    console.log(str)
     if (str === null) {
         return ""
     } else {

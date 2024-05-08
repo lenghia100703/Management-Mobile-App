@@ -7,6 +7,7 @@ import EditPostModal from '@/components/modals/posts/EditPostModal.vue'
 import { onMounted, ref } from 'vue'
 import { getAllPost } from '@/services/post'
 import { loadingFullScreen } from '@/utils/loadingFullScreen'
+import FAIcon from '@/components/common/FAIcon.vue'
 
 const addPostModal = ref<InstanceType<typeof AddPostModal>>()
 const editPostModal = ref<InstanceType<typeof EditPostModal>>()
@@ -53,12 +54,16 @@ onMounted(async () => {
             <el-input class='search-input' placeholder='Tìm bài viết...' type='text' v-model='searchName'
                       clearable />
             <el-button type='primary' :loading='searchLoading' class='search-btn' @click='handleSearch'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-magnifying-glass' />
                 Tìm kiếm
             </el-button>
         </div>
         <div class='flex-grow'></div>
         <div class='right'>
-            <el-button plain type='primary' @click='addPostModal?.openModal()'>Thêm bài viết</el-button>
+            <el-button plain type='primary' @click='addPostModal?.openModal()'>
+                <FAIcon color='' class='icon-margin' icon='fa-solid fa-plus' />
+                Thêm bài viết
+            </el-button>
         </div>
     </div>
     <el-table
@@ -142,13 +147,13 @@ onMounted(async () => {
         <el-table-column fixed='right' label='Hành động' width='130' :align="'center'">
             <template v-slot='scope' #default>
                 <el-tooltip effect='dark' content='Chỉnh sửa bài viết' placement='bottom'>
-                    <el-button type='primary' size='small' plain @click='editPostModal?.openModal(scope.row)'
-                    >Sửa
-                    </el-button
-                    >
+                    <el-button type='primary' size='small' plain @click='editPostModal?.openModal(scope.row)'>
+                        <FAIcon color='' icon='fa-regular fa-pen-to-square' />
+                    </el-button>
                 </el-tooltip>
                 <el-tooltip effect='dark' content='Xóa bài viết' placement='bottom'>
-                    <el-button type='danger' size='small' @click='deletePostModal?.openModal(scope.row)' plain>Xóa
+                    <el-button type='danger' size='small' @click='deletePostModal?.openModal(scope.row)' plain>
+                        <FAIcon color='' icon='fa-regular fa-trash-can' />
                     </el-button>
                 </el-tooltip>
             </template>

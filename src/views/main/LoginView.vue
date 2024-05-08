@@ -46,7 +46,7 @@ const handleLogin = async (user: any) => {
         await login(user)
         await router.push(PATHS.HOME)
     } catch (e) {
-        console.error(e)
+        console.log(e)
         ElMessage.error(
             e.response?.data?.data
                 ? e.response?.data?.data

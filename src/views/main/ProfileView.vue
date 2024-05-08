@@ -39,7 +39,7 @@ const handleSubmit = async (data: any) => {
             message: "Sửa thành công"
         })
     } catch (e) {
-        console.error(e)
+        console.log(e)
         ElMessage({
             type: "error",
             message: "Sửa thất bại"

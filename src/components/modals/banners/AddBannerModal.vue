@@ -2,7 +2,7 @@
 
 import { reactive, ref } from 'vue'
 import { ElForm, ElMessage, FormRules } from 'element-plus'
-import { createNews } from '@/services/news'
+import { createBanner } from '@/services/banner'
 
 const props = defineProps<{
     callBack: () => Promise<void>;
@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const postForm = ref({
     title: '',
-    body: '',
+    isActive: '',
     image: null,
     imageUrl: ''
 })
@@ -34,13 +34,6 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
     ],
-    body: [
-        {
-            required: true,
-            message: 'Vui lòng nhập nội dung',
-            trigger: 'blur',
-        },
-    ],
     imageUrl: [
         {
             trigger: ['blur', 'change'],
@@ -57,10 +50,21 @@ const rules = reactive<FormRules>({
 const createLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
 
-const handleCreateNews = async (data: any) => {
+const activeOptions = [
+    {
+        label: 'Đang hoạt động',
+        value: 'true',
+    },
+    {
+        label: 'Không hoạt động',
+        value: 'false',
+    },
+];
+
+const handleCreateBanner = async (data: any) => {
     createLoading.value = true
     try {
-        await createNews(data)
+        await createBanner(data)
         await props.callBack()
         ElMessage({
             message: 'Thêm thành công',
@@ -91,10 +95,10 @@ const submitForm = (formEl: typeof ElForm | null) => {
         if (valid) {
             const formData = new FormData()
             formData.append('title', postForm.value.title)
-            formData.append('body', postForm.value.body)
+            formData.append('isActive', postForm.value.isActive)
             formData.append('image', postForm.value.image as File)
             formData.append('imageUrl', postForm.value.imageUrl)
-            await handleCreateNews(formData)
+            await handleCreateBanner(formData)
         } else {
             return false
         }
@@ -103,7 +107,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
 
 const resetForm = (form: any) => {
     form.title = ''
-    form.body = ''
+    form.isActive = ''
     form.image = null
     form.imageUrl = ''
 }
@@ -119,13 +123,20 @@ defineExpose({
 </script>
 
 <template>
-    <el-dialog v-model='visible' title='Tạo tin tức - sự kiện mới' width='40%' top='8vh'>
+    <el-dialog v-model='visible' title='Tạo ảnh bìa mới' width='40%' top='8vh'>
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tiêu đề:' prop='title'>
                 <el-input v-model='postForm.title' placeholder='Nhập tiêu đề' type='text' spellcheck='false' clearable />
             </el-form-item>
-            <el-form-item label='Nội dung:' prop='body'>
-                <el-input v-model='postForm.body' placeholder='Nhập nội dung' type='textarea' spellcheck='false' />
+            <el-form-item label='Trạng thái:' prop='isActive'>
+                <el-select v-model="postForm.isActive" class="m-2" placeholder="Các trạng thái">
+                    <el-option
+                        v-for="(item, index) in activeOptions"
+                        :key="index"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                </el-select>
             </el-form-item>
             <el-form-item label='Ảnh minh họa:' prop='imageUrl'>
                 <el-input v-model='postForm.imageUrl' placeholder='Nhập đường dẫn ảnh' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />

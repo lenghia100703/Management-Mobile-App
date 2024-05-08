@@ -4,10 +4,13 @@ import { PATHS } from '@/router/paths'
 import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 import { ref } from 'vue'
 import AvatarDrawers from '@/components/drawers/AvatarDrawers.vue'
+import { useRouter } from 'vue-router'
 
 const authenticationStore = useAuthenticationStore()
 authenticationStore.loadFromServer()
 const infoRef = ref<InstanceType<typeof AvatarDrawers> | null>(null)
+
+const router = useRouter()
 
 const handleOpenDrawer = () => {
     infoRef.value?.openDrawer()
@@ -18,8 +21,8 @@ const handleOpenDrawer = () => {
     <div class='header-content'>
         <template v-if='authenticationStore.authenticated'>
             <el-menu class='menu' mode='horizontal' :ellipsis='false' background-color='#fff' menu-trigger='click'
-                     :default-active='$route.path' router>
-                <el-menu-item class='desktop-logo-container no-hover' :route='PATHS.HOME' index='1'>
+                     :default-active='$route.path' >
+                <el-menu-item class='desktop-logo-container no-hover' @click='router.push("/")'>
                     <img src='../../assets/images/logo.png' class='desktop-logo' alt='logo-app' />
                 </el-menu-item>
 

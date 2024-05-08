@@ -1,6 +1,5 @@
 <script setup lang='ts'>
 
-import { PATHS } from '@/router/paths'
 import FAIcon from '@/components/common/FAIcon.vue'
 import { ref } from 'vue'
 import MenuHeader from '@/components/common/MenuHeader.vue'
@@ -23,10 +22,9 @@ const handleCollapse = () => {
 <template>
     <div class='desktop-navigation-container'>
         <el-menu class='menu-bars'>
-            <el-menu-item>
-                <FAIcon size='25px' icon='fa-solid fa-bars' @click='handleCollapse' />
+            <el-menu-item @click='handleCollapse'>
+                <FAIcon size='25px' icon='fa-solid fa-bars' />
             </el-menu-item>
-
         </el-menu>
         <el-menu
             default-active="2"

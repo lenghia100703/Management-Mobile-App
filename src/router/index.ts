@@ -13,6 +13,10 @@ import ManageQuestionsView from '@/views/questions/ManageQuestionsView.vue'
 import ManageLocationsView from '@/views/locations/ManageLocationsView.vue'
 import ManagePostsView from '@/views/posts/ManagePostsView.vue'
 import ManageTransactionsView from '@/views/transactions/ManageTransactionsView.vue'
+import ManageTicketsView from '@/views/tickets/ManageTicketsView.vue'
+import SettingView from '@/views/main/SettingView.vue'
+import ManageBannersView from '@/views/banners/ManageBannersView.vue'
+import HomeLayout from '@/layouts/HomeLayout.vue'
 
 
 export const router = createRouter({
@@ -21,13 +25,19 @@ export const router = createRouter({
     routes: [
         {
             path: PATHS.HOME,
-            component: DefaultLayout,
+            component: HomeLayout,
             children: [
                 {
                     path: PATHS.HOME,
                     component: HomeView,
                     name: 'home',
                 },
+            ]
+        },
+        {
+            path: PATHS.HOME,
+            component: DefaultLayout,
+            children: [
                 {
                     path: PATHS.ADMIN_MANAGE_NEWS,
                     component: ManageNewsView,
@@ -59,15 +69,30 @@ export const router = createRouter({
                     name: 'manage-posts',
                 },
                 {
+                    path: PATHS.ADMIN_MANAGE_TICKET,
+                    component: ManageTicketsView,
+                    name: 'manage-tickets',
+                },
+                {
                     path: PATHS.ADMIN_MANAGE_TRANSACTION,
                     component: ManageTransactionsView,
                     name: 'manage-transactions',
                 },
                 {
+                    path: PATHS.ADMIN_MANAGE_BANNER,
+                    component: ManageBannersView,
+                    name: 'manage-banners',
+                },
+                {
                     path: PATHS.PROFILE,
                     component: ProfileView,
                     name: 'profile',
-                }
+                },
+                {
+                    path: PATHS.SETTING,
+                    component: SettingView,
+                    name: 'setting',
+                },
             ],
         },
         {
@@ -102,7 +127,8 @@ export const router = createRouter({
                     //     }
                     // }
                 },
-            ]
-        }
+            ],
+        },
+
     ],
 })
