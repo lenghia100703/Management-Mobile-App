@@ -20,8 +20,8 @@ const addLocationModal = ref<InstanceType<typeof AddLocationModal>>()
 const deleteLocationModal = ref<InstanceType<typeof DeleteLocationModal>>()
 const editLocationModal = ref<InstanceType<typeof EditLocationModal>>()
 
-const handleChangePage = async () => {
-    await loadTableData(1)
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {

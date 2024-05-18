@@ -11,7 +11,8 @@ const props = defineProps<{
 const postForm = ref({
     title: '',
     image: null,
-    imageUrl: ''
+    imageUrl: '',
+    description: ''
 })
 
 const postFormRef = ref<typeof ElForm | null>(null)
@@ -37,6 +38,13 @@ const rules = reactive<FormRules>({
         {
             trigger: ['blur', 'change'],
             validator: validateImageUrlOrImageFile,
+        },
+    ],
+    description: [
+        {
+            required: true,
+            message: 'Vui lòng nhập chi tiết',
+            trigger: 'blur',
         },
     ],
     image: [
@@ -85,6 +93,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
             formData.append('title', postForm.value.title)
             formData.append('image', postForm.value.image as File)
             formData.append('imageUrl', postForm.value.imageUrl)
+            formData.append('description', postForm.value.description)
             await handleCreatePost(formData)
         } else {
             return false
@@ -96,6 +105,7 @@ const resetForm = (form: any) => {
     form.title = ''
     form.image = null
     form.imageUrl = ''
+    form.description = ''
 }
 
 function openModal() {
@@ -113,6 +123,9 @@ defineExpose({
         <el-form :model='postForm' label-position='top' ref='postFormRef' :rules='rules'>
             <el-form-item label='Tiêu đề:' prop='title'>
                 <el-input v-model='postForm.title' placeholder='Nhập tiêu đề' type='text' spellcheck='false' clearable />
+            </el-form-item>
+            <el-form-item label='Chi tiết:' prop='title'>
+                <el-input v-model='postForm.description' placeholder='Nhập chi tiết' type='textarea' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Ảnh bài viết:' prop='imageUrl'>
                 <el-input v-model='postForm.imageUrl' placeholder='Nhập đường dẫn ảnh' :disabled='postForm.image !== null' type='text' spellcheck='false' clearable />

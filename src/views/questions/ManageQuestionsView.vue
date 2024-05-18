@@ -20,8 +20,8 @@ const addQuestionModal = ref<InstanceType<typeof AddQuestionModal>>()
 const deleteQuestionModal = ref<InstanceType<typeof DeleteQuestionModal>>()
 const editQuestionModal = ref<InstanceType<typeof EditQuestionModal>>()
 
-const handleChangePage = async () => {
-    await loadTableData(1)
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {

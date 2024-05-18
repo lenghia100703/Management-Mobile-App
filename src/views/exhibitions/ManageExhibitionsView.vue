@@ -20,8 +20,8 @@ const addExhibitionModal = ref<InstanceType<typeof AddExhibitionModal>>()
 const deleteExhibitionModal = ref<InstanceType<typeof DeleteExhibitionModal>>()
 const editExhibitionModal = ref<InstanceType<typeof EditExhibitionModal>>()
 
-const handleChangePage = async () => {
-    await loadTableData(1)
+const handleChangePage = async (val: any) => {
+    await loadTableData(val)
 }
 
 const handleSearch = async () => {

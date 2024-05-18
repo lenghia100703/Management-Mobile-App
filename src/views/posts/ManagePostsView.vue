@@ -86,6 +86,21 @@ onMounted(async () => {
                 </el-popover>
             </template>
         </el-table-column>
+        <el-table-column label='Chi tiết' prop='description'>
+            <template #default='{ row }'>
+                <el-popover placement='bottom' :width='800' trigger='click'>
+                    <template #reference>
+                        <el-text truncated> {{ row.description }}</el-text>
+                    </template>
+                    <template #default>
+                        <el-text style='max-width: 100%;'>
+                            {{ row.description }}
+                        </el-text>
+                    </template>
+                </el-popover>
+            </template>
+        </el-table-column>
+        <el-table-column label='Đánh giá' prop='rating' width='100' :align="'center'"></el-table-column>
         <el-table-column label='Ảnh bài viết' prop='image'>
             <template #default='{ row }'>
                 <el-popover placement='bottom' :show-after='400' :width='300' trigger='hover'>

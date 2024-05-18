@@ -16,6 +16,7 @@ const editForm = ref({
     title: '',
     image: null,
     imageUrl: '',
+    description: ''
 })
 
 const rules = reactive<FormRules>({
@@ -26,6 +27,13 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
     ],
+    description: [
+        {
+            required: true,
+            message: 'Vui lòng nhập chi tiết',
+            trigger: 'blur',
+        },
+    ]
 })
 const editLoading = ref<boolean>(false)
 const imageInput = ref<HTMLInputElement | null>(null)
@@ -66,6 +74,7 @@ const submitForm = (formEl: typeof ElForm | null) => {
             formData.append('title', editForm.value.title)
             formData.append('image', editForm.value.image)
             formData.append('imageUrl', editForm.value.imageUrl)
+            formData.append('description', editForm.value.description)
             await handleEditPost(formData)
         } else {
             return false
@@ -77,12 +86,14 @@ const resetForm = (form: any) => {
     form.title = ''
     form.image = null
     form.imageUrl = ''
+    form.description = ''
 }
 
 const resetToDefault = (form: any) => {
     form.image = null
     form.title = defaultData.value.title
     form.imageUrl = defaultData.value.image
+    form.description = defaultData.value.description
 }
 
 const openModal = (data: any) => {
@@ -90,6 +101,7 @@ const openModal = (data: any) => {
     postId.value = data.id
     editForm.value.title = data.title
     editForm.value.imageUrl = data.image
+    editForm.value.description = data.description
     defaultData.value = data
 }
 
@@ -103,6 +115,9 @@ defineExpose({
         <el-form :model='editForm' label-position='top' ref='editFormRef' :rules='rules'>
             <el-form-item label='Tiêu đề:' prop='title'>
                 <el-input v-model='editForm.title' type='text' spellcheck='false' clearable />
+            </el-form-item>
+            <el-form-item label='Chi tiết:' prop='title'>
+                <el-input v-model='editForm.description' placeholder='Nhập chi tiết' type='textarea' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Ảnh bài viết:' prop='imageUrl'>
                 <el-input v-model='editForm.imageUrl' placeholder='Nhập đường dẫn ảnh'
