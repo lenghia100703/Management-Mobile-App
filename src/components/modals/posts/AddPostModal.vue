@@ -124,7 +124,7 @@ defineExpose({
             <el-form-item label='Tiêu đề:' prop='title'>
                 <el-input v-model='postForm.title' placeholder='Nhập tiêu đề' type='text' spellcheck='false' clearable />
             </el-form-item>
-            <el-form-item label='Chi tiết:' prop='title'>
+            <el-form-item label='Chi tiết:' prop='description'>
                 <el-input v-model='postForm.description' placeholder='Nhập chi tiết' type='textarea' spellcheck='false' clearable />
             </el-form-item>
             <el-form-item label='Ảnh bài viết:' prop='imageUrl'>
